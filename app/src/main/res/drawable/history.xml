@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="42dp"
+    android:height="42dp"
+    android:viewportWidth="19"
+    android:viewportHeight="19">
+
+  <!-- Border Path with the Original Fill Color -->
+  <path
+      android:pathData="M17.417,9.583A7.917,7.917 0,1 1,9.5 1.666a7.917,7.917 0,0 1,7.917 7.917Z"
+      android:fillColor="#FF3D00"/>
+
+  <!-- Inside Paths with a Different Fill Color (Blue in this example) -->
+  <path
+      android:pathData="M14.63,9.643a5.076,5.076 0,0 0,-7.6 -4.401,5.11 5.11,0 0,0 -1.252,1.015L5.778,5.57a0.396,0.396 0,0 0,-0.792 0v1.66a0.396,0.396 0,0 0,0.396 0.395L7.04,7.625a0.396,0.396 0,0 0,0 -0.791h-0.717A4.274,4.274 0,0 1,9.556 5.36a4.282,4.282 0,1 1,-4.283 4.283,0.396 0.396,0 0,0 -0.792,0 5.074,5.074 0,1 0,10.15 0zM9.867,9.544L9.867,6.872a0.396,0.396 0,0 0,-0.791 0v2.841a0.395,0.395 0,0 0,0.153 0.313l1.537,1.536a0.396,0.396 0,1 0,0.56 -0.56z"
+      android:fillColor="@color/white"/>
+</vector>

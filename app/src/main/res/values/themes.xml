@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Project" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="theme_color">@color/theme_light_color</item> <!-- Use black for light theme -->
+        <item name="home_color">@color/blue</item> <!-- Use black for light theme -->
+        <item name="icon_color">@color/pressed_button_color</item>
+    </style>
+
+    <style name="Theme.Project" parent="Base.Theme.Project" />
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!-- XML implementation of Card Layout -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:background="@drawable/cardlayout"
+    android:layout_gravity="left"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="5dp"
+    android:layout_weight="1"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/idIVcourse"
+            android:layout_width="100dp"
+            android:layout_marginTop="15dp"
+            android:layout_height="100dp"
+            android:layout_gravity="left"
+            android:src="@drawable/marketing" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:id="@+id/idGridContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Marketing"
+            android:padding="8dp"
+            android:textFontWeight="500" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

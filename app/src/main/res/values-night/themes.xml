@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Project" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="theme_color">@color/theme_dark_color</item> <!-- Use white for dark theme -->
+        <item name="home_color">@color/lightblue</item> <!-- Use white for dark theme -->
+        <item name="icon_color">@color/Cardhover</item> <!-- Use white for dark theme -->
+    </style>
+</resources>

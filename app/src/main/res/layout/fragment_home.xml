@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/navigation_background"
+        android:orientation="horizontal">
+
+        <!--  Title  -->
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_marginStart="24dp"
+            android:text="Categories"
+            android:textFontWeight="700" />
+
+        <!--  Search Button  -->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:layout_marginStart="8dp"
+            android:gravity="right"
+            android:queryHint="Search..." />
+
+    </LinearLayout>
+
+    <!-- Contain Data -->
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:horizontalSpacing="8dp"
+        android:listSelector="@color/Cardhover"
+        android:numColumns="2"
+        android:paddingTop="8dp"
+        android:paddingStart="12dp"
+        android:layout_marginTop="80dp"
+        android:verticalSpacing="8dp"/>
+
+</FrameLayout>

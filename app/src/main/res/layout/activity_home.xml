@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home_activity">
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="84dp"
+    ></FrameLayout>
+    <!--  Foot Bar  -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/footer_background"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <!-- Home Layout -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1">
+
+            <!-- Contents for Home Button -->
+
+            <ImageView
+                android:id="@+id/homeImg"
+                android:layout_width="40dp"
+                android:layout_height="41dp"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:src="@drawable/home"
+                app:tint="?attr/home_color" />
+
+            <TextView
+                android:id="@+id/homeTxt"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:text="Home" />
+        </FrameLayout>
+
+        <!-- Recent Layout -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1">
+
+            <!-- Contents for Recent Button -->
+            <ImageView
+                android:id="@+id/recentImg"
+                android:layout_width="40dp"
+                android:layout_height="41dp"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:src="@drawable/recent" />
+
+            <TextView
+                android:id="@+id/recentTxt"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:text="Recent" />
+        </FrameLayout>
+
+        <!-- Setting Layout -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1">
+
+            <!-- Contents for Setting Button -->
+            <ImageView
+                android:id="@+id/settingImg"
+                android:layout_width="40dp"
+                android:layout_height="41dp"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:src="@drawable/setting" />
+
+            <TextView
+                android:id="@+id/settingTxt"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:text="Setting" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

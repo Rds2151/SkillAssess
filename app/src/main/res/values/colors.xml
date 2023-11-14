@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorPrimaryButtonBg">#18206F</color>
+    <color name="colorPrimaryTextOpaque">#18206F</color>
+    <color name="colorPrimaryDark">#11164E</color>
+    <color name="colorAccent">#E91E63</color>
+    <color name="colorPrimaryText">#18206F</color>
+    <color name="colorEditTextBgColor">#f2f5fa</color>
+    <color name="colorEditTextBorderColor">#E9EBEF</color>
+    <color name="colorPrimary">#18206F</color>
+    <color name="hintTextColor">#333333</color>
+    <color name="textColor">#161616</color>
+    <color name="search_btn">#2709d2</color>
+    <color name="nav_img">#C0C0C0</color>
+    <color name="lightgrey">#989898</color>
+    <color name="blue">#2709d2</color>
+    <color name="lightblue">#00B0FF</color>
+    <color name="Cardhover">#f6faf3</color>
+    <color name="colorTimebomb">#673AB7</color>
+    <color name="radioBtncolor">#F8FF8C</color>
+    <color name="normal_button_color">#dcdcdc</color>
+    <color name="pressed_button_color">#fc00fc</color>
+    <color name="darkgrey">#2C2C2C</color>
+    <color name="theme_light_color">#2C2C2C</color> <!-- Black for light theme -->
+    <color name="theme_dark_color">#FFFFFF</color> <!-- White for dark theme -->
+    <color name="profileLayout">#0C1B32</color>
+    <color name="iconwhite">#1C274C</color>
+    <color name="red">#ff1a1a</color>
+</resources>

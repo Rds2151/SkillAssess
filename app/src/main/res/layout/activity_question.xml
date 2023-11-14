@@ -1,0 +1,165 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Question_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.49"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/question_background"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/QuestionNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="24dp"
+                    android:text="Question 1 / 10"
+                    android:textColor="@color/Cardhover"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/questionText"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="355dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:paddingTop="8dp"
+                    android:text="Android Tutorial Series For Beginners In Hindi - screens design in Android using Constraint Layout. layouts for your android app. Android Simple Daily Quiz App "
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textFontWeight="600"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/time_btn">
+
+                <!-- Contents for Time Button -->
+                <ImageView
+                    android:id="@+id/homeImg"
+                    android:layout_width="40dp"
+                    android:layout_height="41dp"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="24dp"
+                    android:padding="3dp"
+                    android:src="@drawable/baseline_access_time_filled_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/timeTxt"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="18dp"
+                    android:gravity="center"
+                    android:text="3:49"
+                    android:textColor="@color/white" />
+            </FrameLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_marginBottom="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:paddingTop="34dp"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/optionGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RadioButton
+                android:id="@+id/option1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/borderline"
+                android:button="@drawable/btn_primary"
+                android:padding="10dp"
+                android:text="Operating System"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/option2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/borderline"
+                android:button="@drawable/btn_primary"
+                android:padding="10dp"
+                android:text="Data Structure"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/option3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/borderline"
+                android:button="@drawable/btn_primary"
+                android:padding="10dp"
+                android:text="C Programming"
+                android:textAlignment="center" />
+
+            <RadioButton
+                android:id="@+id/option4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/borderline"
+                android:button="@drawable/btn_primary"
+                android:padding="10dp"
+                android:text="Java Programming"
+                android:textAlignment="center" />
+
+        </RadioGroup>
+    </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="136dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="40dp"
+        android:layout_gravity="center"
+        android:text="Next"/>
+
+</LinearLayout>
