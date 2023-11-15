@@ -150,7 +150,6 @@ public class DataConnectivity {
 
     protected CompletableFuture<String> updateProfile(Uri imageURI, String Name, String birthDate, String Gender) {
         String uid = mAuth.getCurrentUser().getUid();
-
         CompletableFuture<String> updateResult = new CompletableFuture<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = new HashMap<>();
@@ -165,7 +164,7 @@ public class DataConnectivity {
             public void run() {
                 profileImage.putFile(imageURI)
                         .addOnSuccessListener(taskSnapshot -> {
-                            storageReference.getDownloadUrl()
+                            taskSnapshot.getMetadata().getReference().getDownloadUrl()
                                     .addOnSuccessListener(uri -> {
                                         data.put("Profile_Image", uri);
                                         data.put("Full_name", Name);
@@ -195,53 +194,53 @@ public class DataConnectivity {
         return updateResult;
     }
 
-    protected void fetchDetails(DataCallback callback) {
-        String uid = mAuth.getCurrentUser().getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        StorageReference profileImageReference = FirebaseStorage.getInstance().getReference().child("Profile_Images/" + uid);
+//    protected void fetchDetails(DataCallback callback) {
+//        String uid = mAuth.getCurrentUser().getUid();
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        StorageReference profileImageReference = FirebaseStorage.getInstance().getReference().child("Profile_Images/" + uid);
+//
+//        executorService.execute(() -> {
+//            db.collection("profile").document(uid).get()
+//                    .addOnSuccessListener(documentSnapshot -> {
+//                        Map<String, Object> data = new HashMap<>();
+//
+//                        if (documentSnapshot.exists()) {
+//                            data.put("Full_name", documentSnapshot.getString("Full_name"));
+//                            data.put("Birthdate", documentSnapshot.getString("Birthdate"));
+//                            data.put("Gender", documentSnapshot.getString("Gender"));
+//                            String imageUrl = documentSnapshot.getString("Profile_Image");
+//                            profileImageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+//                                data.put("Profile_Image", uri);
+//                                callback.onDataReceived(data);
+//                            });
+//                        } else {
+//                            data.put("Error", "Data Not found");
+//                            callback.onDataReceived(data);
+//                        }
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Map<String, Object> data = new HashMap<>();
+//                        data.put("Error", "Data Not found");
+//                        callback.onDataReceived(data);
+//                    });
+//        });
+//    }
+//
+//    public interface DataCallback {
+//        void onDataReceived(Map<String, Object> data);
+//    }
 
-        executorService.execute(() -> {
-            db.collection("profile").document(uid).get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        Map<String, Object> data = new HashMap<>();
-
-                        if (documentSnapshot.exists()) {
-                            data.put("Full_name", documentSnapshot.getString("Full_name"));
-                            data.put("Birthdate", documentSnapshot.getString("Birthdate"));
-                            data.put("Gender", documentSnapshot.getString("Gender"));
-                            String imageUrl = documentSnapshot.getString("Profile_Image");
-                            profileImageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                data.put("Profile_Image", uri);
-                                callback.onDataReceived(data);
-                            });
-                        } else {
-                            data.put("Error", "Data Not found");
-                            callback.onDataReceived(data);
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("Error", "Data Not found");
-                        callback.onDataReceived(data);
-                    });
-        });
-    }
-
-    public interface DataCallback {
-        void onDataReceived(Map<String, Object> data);
-    }
-
-    protected void fetchProfileImg(final ProfileImageCallback callback) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile_Images/" + mAuth.getCurrentUser().getUid());
-        Log.d("test", "fetchProfileImg: Profile_Images/"+mAuth.getCurrentUser().getUid());
-        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-            callback.onProfileImageReceived(uri);
-            Log.d("check", ": "+uri);
-        });
-    }
-
-    public interface ProfileImageCallback {
-        void onProfileImageReceived(Uri imageUri);
-    }
+//    protected void fetchProfileImg(final ProfileImageCallback callback) {
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Profile_Images/" + mAuth.getCurrentUser().getUid());
+//        Log.d("test", "fetchProfileImg: Profile_Images/"+mAuth.getCurrentUser().getUid());
+//        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+//            callback.onProfileImageReceived(uri);
+//            Log.d("check", ": "+uri);
+//        });
+//    }
+//
+//    public interface ProfileImageCallback {
+//        void onProfileImageReceived(Uri imageUri);
+//    }
 
 }

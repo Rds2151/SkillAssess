@@ -10,31 +10,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.net.URI;
+import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.Objects;
 
 public class profile_activity extends AppCompatActivity {
 
@@ -42,7 +34,6 @@ public class profile_activity extends AppCompatActivity {
     ImageView editprofileImg;
     EditText firstName,lastName,emailTxt,birthDate;
     AlertDialog alertDialog;
-    Button cancel;
     Uri profileUri = null;
     RadioGroup genderRG;
     private String gender = null;
@@ -61,7 +52,6 @@ public class profile_activity extends AppCompatActivity {
         emailTxt = findViewById(R.id.emailTxt);
         birthDate = findViewById(R.id.birthDate);
         genderRG = findViewById(R.id.gender);
-        cancel = findViewById(R.id.cancel_button);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -78,12 +68,24 @@ public class profile_activity extends AppCompatActivity {
         emailTxt.setText(email);
 
         Map<String,Object> data = MainActivity.profileDetail.getData();
-
+        this.profileUri = (Uri)data.get("profileUri");
         firstName.setText((CharSequence) data.get("first_Name"));
         lastName.setText((CharSequence) data.get("last_Name"));
         birthDate.setText((CharSequence) data.get("Birthdate"));
-        editprofileImg.setImageURI((Uri)data.get("profileUri"));
-        this.profileUri = (Uri)data.get("profileUri");
+
+        Picasso.get()
+                .load(this.profileUri)
+                .error(R.drawable.avatar)
+                .into(editprofileImg);
+
+        ImageButton backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack(v);
+            }
+        });
+
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,45 +98,33 @@ public class profile_activity extends AppCompatActivity {
             }
         });
 
-        firstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                TextView errorFname = findViewById(R.id.errorFn);
-                if(!hasFocus) {
-                    if(validation(firstName,R.id.errorFn) == null) {
-                        errorFname.setText("");
-                    }
+        firstName.setOnFocusChangeListener((view, hasFocus) -> {
+            TextView errorFname = findViewById(R.id.errorFn);
+            if(!hasFocus) {
+                if(validation(firstName,R.id.errorFn) == null) {
+                    errorFname.setText("");
                 }
             }
         });
-        lastName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                TextView errorLname = findViewById(R.id.errorLn);
-                if(!hasFocus) {
-                    if(validation(lastName,R.id.errorLn) == null) {
-                        errorLname.setText("");
-                    }
+        lastName.setOnFocusChangeListener((view, hasFocus) -> {
+            TextView errorLname = findViewById(R.id.errorLn);
+            if(!hasFocus) {
+                if(validation(lastName,R.id.errorLn) == null) {
+                    errorLname.setText("");
                 }
             }
         });
 
-        genderRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                RadioButton radioButton = findViewById(checkedId);
-                gender = radioButton.getText().toString();
-            }
+        genderRG.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            RadioButton radioButton = findViewById(checkedId);
+            gender = radioButton.getText().toString();
         });
 
         calendar = Calendar.getInstance();
-        birthDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {datePicker();}}});
-        birthDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {datePicker();}});
+        birthDate.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {datePicker();}});
+
+        birthDate.setOnClickListener(view -> datePicker());
     }
 
     private void datePicker()
@@ -173,13 +163,20 @@ public class profile_activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        profileUri = data.getData();
-        editprofileImg.setImageURI(profileUri);
+        if ( resultCode == RESULT_OK && data != null) {
+            profileUri = data.getData();
+            editprofileImg.setImageURI(profileUri);    
+        } else {
+            Toast.makeText(this, "Error, Try again", Toast.LENGTH_SHORT).show();
+        }
     }
     public void saveData(View view) {
         String fname = firstName.getText().toString().trim();
         String lname = lastName.getText().toString().trim();
         String date = birthDate.getText().toString();
+        if ( gender == null) {
+            gender = "";
+        }
 
         if (validation(firstName, R.id.errorFn) != null) {
             return; // Input validation failed
@@ -209,7 +206,7 @@ public class profile_activity extends AppCompatActivity {
         }
 
         DataConnectivity dc = new DataConnectivity(emailTxt.getText().toString());
-        dc.updateProfile(profileUri, fname + " " + lname, date, gender)
+        dc.updateProfile(profileUri, fname + " " + lname, date, this.gender)
                 .thenAccept(result -> {
                     runOnUiThread(() -> {
                         alertDialog.cancel();
@@ -231,6 +228,6 @@ public class profile_activity extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        onBackPressed();
+        getOnBackPressedDispatcher().onBackPressed();
     }
 }
