@@ -20,19 +20,19 @@ class profileDetail {
 //                profileUri = imageUri;
 //            }
 //        });
-//        dc.fetchDetails(new DataConnectivity.DataCallback() {
-//            @Override
-//            public void onDataReceived(Map<String, Object> data) {
-//                if (data.containsKey("Error")) {
-//                    // Handle the error case
-//                    String errorMessage = (String) data.get("Error");
-//                    Log.d("profileDetail", "onDataReceived: "+errorMessage);
-//                } else {
-//                    // Data retrieval was successful
-//                    updateDetail(data);
-//                }
-//            }
-//        });
+        dc.fetchDetails(new DataConnectivity.DataCallback() {
+            @Override
+            public void onDataReceived(Map<String, Object> data) {
+                if (data.containsKey("Error")) {
+                    // Handle the error case
+                    String errorMessage = (String) data.get("Error");
+                    Log.d("profileDetail", "onDataReceived: "+errorMessage);
+                } else {
+                    // Data retrieval was successful
+                    updateDetail(data);
+                }
+            }
+        });
     }
 
     protected void updateDetail(Map<String, Object> data) {

@@ -103,9 +103,10 @@ public class SettingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (MainActivity.profileDetail.getprofileUri() != null) {
-            profileImg.setImageURI(MainActivity.profileDetail.getprofileUri());
-        }
+        Picasso.get()
+                .load(MainActivity.profileDetail.getprofileUri())
+                .error(R.drawable.usericon)
+                .into(profileImg);
 
         if (MainActivity.profileDetail.getFullName() != null) {
             profileTxt.setText(MainActivity.profileDetail.getFullName());
