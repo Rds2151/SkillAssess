@@ -35,15 +35,8 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        btnSignOut = rootView.findViewById(R.id.btnSignOut);
-        leaderBtn = rootView.findViewById(R.id.leaderBtn);
-        historyBtn = rootView.findViewById(R.id.historyBtn);
-        editBtn = rootView.findViewById(R.id.editBtn);
-        changePasswdBtn = rootView.findViewById(R.id.changePasswdBtn);
-        privacyBtn = rootView.findViewById(R.id.privacyBtn);
         profileImg = rootView.findViewById(R.id.profileImg);
         profileTxt = rootView.findViewById(R.id.profiletxt);
-        forwardBtn = rootView.findViewById(R.id.forwardBtn);
 
         Picasso.get()
                 .load(MainActivity.profileDetail.getprofileUri())
@@ -53,6 +46,14 @@ public class SettingFragment extends Fragment {
         if (MainActivity.profileDetail.getFullName() != null) {
             profileTxt.setText(MainActivity.profileDetail.getFullName());
         }
+
+        btnSignOut = rootView.findViewById(R.id.btnSignOut);
+        leaderBtn = rootView.findViewById(R.id.leaderBtn);
+        historyBtn = rootView.findViewById(R.id.historyBtn);
+        editBtn = rootView.findViewById(R.id.editBtn);
+        changePasswdBtn = rootView.findViewById(R.id.changePasswdBtn);
+        privacyBtn = rootView.findViewById(R.id.privacyBtn);
+        forwardBtn = rootView.findViewById(R.id.forwardBtn);
 
         btnSignOut.setOnClickListener(this::logout);
 

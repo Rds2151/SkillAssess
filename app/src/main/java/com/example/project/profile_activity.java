@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -72,6 +73,16 @@ public class profile_activity extends AppCompatActivity {
         firstName.setText((CharSequence) data.get("first_Name"));
         lastName.setText((CharSequence) data.get("last_Name"));
         birthDate.setText((CharSequence) data.get("Birthdate"));
+        gender = (String) data.get("Gender");
+
+        RadioButton maleRadioButton = findViewById(R.id.maleRB);
+        RadioButton femaleRadioButton = findViewById(R.id.femaleRB);
+
+        if ("Male".equals(gender)) {
+            maleRadioButton.setChecked(true);
+        } else if ("Female".equals(gender)) {
+            femaleRadioButton.setChecked(true);
+        }
 
         Picasso.get()
                 .load(this.profileUri)
