@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import com.squareup.picasso.Picasso;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,9 +45,10 @@ public class SettingFragment extends Fragment {
         profileTxt = rootView.findViewById(R.id.profiletxt);
         forwardBtn = rootView.findViewById(R.id.forwardBtn);
 
-        if (MainActivity.profileDetail.getprofileUri() != null) {
-            profileImg.setImageURI(MainActivity.profileDetail.getprofileUri());
-        }
+        Picasso.get()
+                .load(MainActivity.profileDetail.getprofileUri())
+                .error(R.drawable.usericon)
+                .into(profileImg);
 
         if (MainActivity.profileDetail.getFullName() != null) {
             profileTxt.setText(MainActivity.profileDetail.getFullName());
