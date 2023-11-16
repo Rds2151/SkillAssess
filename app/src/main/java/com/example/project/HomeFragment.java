@@ -68,11 +68,24 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         courseRV = rootView.findViewById(R.id.courseRV);
+        DataQuery dataQuery = new DataQuery();
+
         courseRV.setHasFixedSize(true);
         courseRV.setLayoutManager(new GridLayoutManager(requireActivity(),2));
 
-        RecycleAdapter recycleAdapter = new RecycleAdapter(DataConnectivity.courseModels,requireActivity());
-        courseRV.setAdapter(recycleAdapter);
+        dataQuery.loadCategories(new DataQuery.LoadCategoriesCallback() {
+            @Override
+            public void onCategoriesLoaded(ArrayList<CourseModel> courseModels) {
+                updateRecyclerView(courseModels);
+            }
+        });
         return rootView;
+    }
+
+    private void updateRecyclerView(ArrayList<CourseModel> courseModels) {
+        if(isAdded()) {
+            RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels, requireActivity());
+            courseRV.setAdapter(recycleAdapter);
+        }
     }
 }

@@ -3,13 +3,19 @@ package com.example.project;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -115,5 +121,23 @@ public class DataQuery {
         void onDataReceived(Map<String, Object> data);
     }
 
+    protected void loadCategories(LoadCategoriesCallback loadCategoriesCallback) {
+        executorService.execute(() -> {
+            DataQuery.courseModels.clear();
+            firestore.collection("Courses").get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            DataQuery.courseModels.add(new CourseModel(doc.getString("Course_Name"),doc.getString("Course_Image")));
+                        }
+                        loadCategoriesCallback.onCategoriesLoaded(courseModels);
+                    })
+                    .addOnFailureListener(e -> {
+                    });
+        });
+    }
+
+    public interface LoadCategoriesCallback {
+        public void onCategoriesLoaded(ArrayList<CourseModel> courseModels);
+    }
 
 }

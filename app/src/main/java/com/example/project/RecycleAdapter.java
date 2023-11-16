@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
@@ -33,7 +35,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, int position) {
         CourseModel currentCourse = courseModels.get(position);
         holder.courseName.setText(currentCourse.getCourse_Name());
-        holder.courseImage.setImageResource(currentCourse.getImg_URL());
+        Picasso.get()
+                .load(currentCourse.getImg_URL())
+                .into(holder.courseImage);
     }
 
     @Override
