@@ -9,18 +9,12 @@ import java.util.Map;
 class profileDetail {
     String Brithdate,FName,LName,Gender = "";
     Uri profileUri = null;
+    int Total_Score = 0;
 
     public profileDetail()
     {
-        DataConnectivity dc = new DataConnectivity();
-
-//        dc.fetchProfileImg(new DataConnectivity.ProfileImageCallback() {
-//            @Override
-//            public void onProfileImageReceived(Uri imageUri) {
-//                profileUri = imageUri;
-//            }
-//        });
-        dc.fetchDetails(new DataConnectivity.DataCallback() {
+        DataQuery dq = new DataQuery();
+        dq.fetchDetails(new DataQuery.DataCallback() {
             @Override
             public void onDataReceived(Map<String, Object> data) {
                 if (data.containsKey("Error")) {
@@ -42,6 +36,7 @@ class profileDetail {
         this.Brithdate = data.get("Birthdate") != null ? data.get("Birthdate").toString() : "";
         this.Gender = data.get("Gender") != null ? data.get("Gender").toString() : "";
         this.profileUri = data.get("Profile_Image") == null ? null : (Uri) data.get("Profile_Image");
+        this.Total_Score = data.get("Total_Score") != null ? ((Number) data.get("Total_Score")).intValue() : 0;
     }
 
     protected Map<String,Object> getData()

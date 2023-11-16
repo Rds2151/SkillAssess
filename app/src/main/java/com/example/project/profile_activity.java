@@ -174,7 +174,7 @@ public class profile_activity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if ( resultCode == RESULT_OK && data != null) {
-            profileUri = data.getData();
+            this.profileUri = data.getData();
             editprofileImg.setImageURI(profileUri);    
         } else {
             Toast.makeText(this, "Error, Try again", Toast.LENGTH_SHORT).show();
@@ -196,7 +196,7 @@ public class profile_activity extends AppCompatActivity {
             return; // Input validation failed
         }
 
-        if (profileUri == null) {
+        if (this.profileUri == null) {
             Toast.makeText(this, "Please set a profile image.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -215,8 +215,8 @@ public class profile_activity extends AppCompatActivity {
             lname = lname.substring(0, 1).toUpperCase() + lname.substring(1);
         }
 
-        DataConnectivity dc = new DataConnectivity(emailTxt.getText().toString());
-        dc.updateProfile(profileUri, fname + " " + lname, date, this.gender)
+        DataQuery dataQuery = new DataQuery();
+        dataQuery.updateProfile(this.profileUri, fname + " " + lname, date, this.gender)
                 .thenAccept(result -> {
                     runOnUiThread(() -> {
                         alertDialog.cancel();

@@ -5,8 +5,10 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:background="@drawable/cardlayout"
-    android:layout_gravity="left"
-    android:layout_margin="12dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="5dp"
     android:layout_weight="1"
     app:cardElevation="5dp">
@@ -17,7 +19,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/idIVcourse"
+            android:id="@+id/courseImg"
             android:layout_width="80dp"
             android:layout_height="90dp"
             android:layout_gravity="left"
@@ -27,13 +29,13 @@
 
         <TextView
             style="@style/TextAppearance.AppCompat.Medium"
-            android:id="@+id/idGridContent"
+            android:id="@+id/courseTxt"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/card_text_background"
             android:paddingTop="8dp"
             android:paddingLeft="8dp"
-            android:layout_margin="4dp"
+            android:layout_margin="6dp"
             android:textColor="?attr/theme_color"
             android:textFontWeight="500" />
     </LinearLayout>
