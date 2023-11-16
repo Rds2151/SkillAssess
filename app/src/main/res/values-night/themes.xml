@@ -6,5 +6,6 @@
         <item name="theme_color">@color/theme_dark_color</item> <!-- Use white for dark theme -->
         <item name="home_color">@color/lightblue</item> <!-- Use white for dark theme -->
         <item name="icon_color">@color/Cardhover</item> <!-- Use white for dark theme -->
+        <item name="card_color">@color/hintTextColor</item> <!-- Use white for dark theme -->
     </style>
 </resources>

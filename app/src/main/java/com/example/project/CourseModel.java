@@ -1,6 +1,8 @@
 package com.example.project;
 
-public class CourseModel {
+import java.io.Serializable;
+
+public class CourseModel implements Serializable {
 
     private String course_Name;
     private String img_URL;

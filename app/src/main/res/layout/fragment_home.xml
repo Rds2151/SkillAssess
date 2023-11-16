@@ -24,7 +24,7 @@
             android:textFontWeight="700" />
 
         <!--  Search Button  -->
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,14 +36,11 @@
     </LinearLayout>
 
     <!-- Contain Data -->
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CourseRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="8dp"
-        android:listSelector="@color/Cardhover"
-        android:numColumns="2"
-        android:paddingTop="8dp"
-        android:paddingStart="12dp"
         android:layout_marginTop="80dp"
         android:verticalSpacing="8dp"/>
 

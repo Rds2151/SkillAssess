@@ -9,6 +9,7 @@
     <color name="colorPrimaryText">#18206F</color>
     <color name="colorEditTextBgColor">#f2f5fa</color>
     <color name="colorEditTextBorderColor">#E9EBEF</color>
+    <color name="card_layout_color">#E7EFF3</color>
     <color name="colorPrimary">#18206F</color>
     <color name="hintTextColor">#333333</color>
     <color name="textColor">#161616</color>

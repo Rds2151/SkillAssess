@@ -96,8 +96,7 @@ public class profile_activity extends AppCompatActivity {
                 goBack(v);
             }
         });
-
-
+        
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

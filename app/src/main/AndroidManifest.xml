@@ -25,12 +25,6 @@
             android:name=".Question_Activity"
             android:exported="false" />
         <activity
-            android:name=".card_grid_activity"
-            android:exported="false" />
-        <activity
-            android:name=".contain_activity"
-            android:exported="false" />
-        <activity
             android:name=".getStarted"
             android:exported="false" />
         <activity
