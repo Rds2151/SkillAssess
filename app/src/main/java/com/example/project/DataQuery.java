@@ -24,11 +24,13 @@ public class DataQuery {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
+    private StorageReference storageReference;
     public static ArrayList<CourseModel> courseModels = new ArrayList<>();
 
     public DataQuery() {
         this.firestore = FirebaseFirestore.getInstance();
         this.mAuth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     protected CompletableFuture<String> updateProfile(Uri imageURI, String Name, String birthDate, String Gender) {
@@ -36,7 +38,6 @@ public class DataQuery {
         CompletableFuture<String> updateResult = new CompletableFuture<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = new HashMap<>();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
         // Create a reference to the profile image in Firebase Storage
         StorageReference profileImage = storageReference.child("Profile_Images/" + uid);
@@ -81,7 +82,7 @@ public class DataQuery {
     protected void fetchDetails(com.example.project.DataQuery.DataCallback callback) {
         String uid = mAuth.getCurrentUser().getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        StorageReference profileImageReference = FirebaseStorage.getInstance().getReference().child("Profile_Images/" + uid);
+        StorageReference profileImageReference = storageReference.child("Profile_Images/" + uid);
 
         executorService.execute(() -> {
             db.collection("profile").document(uid).get()
@@ -113,4 +114,6 @@ public class DataQuery {
     public interface DataCallback {
         void onDataReceived(Map<String, Object> data);
     }
+
+
 }
