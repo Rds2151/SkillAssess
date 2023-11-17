@@ -6,8 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -39,6 +43,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
                 .load(currentCourse.getImg_URL())
                 .error(R.drawable.usericon)
                 .into(holder.courseImage);
+        holder.cardView.setOnClickListener(v -> {
+            Toast.makeText(context, ""+currentCourse.getCourse_Name(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -48,11 +55,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView courseImage;
+        CardView cardView;
         TextView courseName;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             courseImage = itemView.findViewById(R.id.courseImg);
             courseName = itemView.findViewById(R.id.courseTxt);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 }
