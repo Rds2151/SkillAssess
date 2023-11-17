@@ -37,6 +37,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
         holder.courseName.setText(currentCourse.getCourse_Name());
         Picasso.get()
                 .load(currentCourse.getImg_URL())
+                .error(R.drawable.usericon)
                 .into(holder.courseImage);
     }
 

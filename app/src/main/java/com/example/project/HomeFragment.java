@@ -72,7 +72,6 @@ public class HomeFragment extends Fragment {
 
         courseRV.setHasFixedSize(true);
         courseRV.setLayoutManager(new GridLayoutManager(requireActivity(),2));
-
         dataQuery.loadCategories(new DataQuery.LoadCategoriesCallback() {
             @Override
             public void onCategoriesLoaded(ArrayList<CourseModel> courseModels) {

@@ -31,7 +31,7 @@ public class DataQuery {
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private StorageReference storageReference;
-    public static ArrayList<CourseModel> courseModels = new ArrayList<>();
+    public ArrayList<CourseModel> courseModels = new ArrayList<>();
 
     public DataQuery() {
         this.firestore = FirebaseFirestore.getInstance();
@@ -123,11 +123,11 @@ public class DataQuery {
 
     protected void loadCategories(LoadCategoriesCallback loadCategoriesCallback) {
         executorService.execute(() -> {
-            DataQuery.courseModels.clear();
+            this.courseModels.clear();
             firestore.collection("Courses").get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            DataQuery.courseModels.add(new CourseModel(doc.getString("Course_Name"),doc.getString("Course_Image")));
+                            this.courseModels.add(new CourseModel(doc.getString("Course_Name"),doc.getString("Course_Image")));
                         }
                         loadCategoriesCallback.onCategoriesLoaded(courseModels);
                     })

@@ -67,16 +67,20 @@ public class DataConnectivity {
                     if (task.isSuccessful()) {
                         // Check if the user is authenticated and email is verified
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        if (!user.isEmailVerified() && user != null) {
-                            result.complete("Please verify your email address before logging in.");
+                        if (user != null) {
+                            if (user.isEmailVerified()) {
+                                String email = user.getEmail();
+                                SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("email", email);
+                                editor.apply();
+                                result.complete("Login successful");
+                            } else {
+                                result.complete("Please verify your email address before logging in.");
+                            }
                         }
-                        else if (user != null && user.isEmailVerified()) {
-                            String email = user.getEmail();
-                            SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("email", email);
-                            editor.apply();
-                            result.complete("Login successful");
+                        else {
+                            result.complete("User is not authenticated. Please log in again.");
                         }
                     } else {
                         String errorMessage = task.getException() != null ? task.getException().getMessage() : "Login failed.";
