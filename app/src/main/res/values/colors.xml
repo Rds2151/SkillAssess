@@ -28,5 +28,7 @@
     <color name="theme_dark_color">#FFFFFF</color> <!-- White for dark theme -->
     <color name="profileLayout">#0C1B32</color>
     <color name="iconwhite">#1C274C</color>
+    <color name="Btn_default">#D1BCFF</color>
+    <color name="select_btn_hover">#9464FF</color>
     <color name="red">#ff1a1a</color>
 </resources>

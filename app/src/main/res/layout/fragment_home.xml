@@ -42,6 +42,29 @@
         android:layout_height="match_parent"
         android:horizontalSpacing="8dp"
         android:layout_marginTop="80dp"
-        android:verticalSpacing="8dp"/>
+        android:verticalSpacing="8dp"
+        android:visibility="visible"/>
 
+    <FrameLayout
+        android:id="@+id/datanotfound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/data_404"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="290dp"
+            android:gravity="center"
+            android:textFontWeight="1000"
+            android:text="Data not found" />
+    </FrameLayout>
 </FrameLayout>

@@ -1,26 +1,24 @@
 package com.example.project;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -129,18 +127,49 @@ public class DataQuery {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             if (doc.getBoolean("Display"))
                             {
-                                this.courseModels.add(new CourseModel(doc.getString("Course_Name"),doc.getString("Course_Image")));
+                                this.courseModels.add(new CourseModel(doc.getId(), doc.getString("Course_Name"),doc.getString("Course_Image")));
                             }
                         }
                         loadCategoriesCallback.onCategoriesLoaded(courseModels);
-                    })
-                    .addOnFailureListener(e -> {
                     });
         });
     }
 
     public interface LoadCategoriesCallback {
         public void onCategoriesLoaded(ArrayList<CourseModel> courseModels);
+    }
+
+    protected void loadSubjects(String Course, LoadCategoriesCallback loadCategoriesCallback) {
+        DocumentReference subjDocument = firestore.collection("Courses").document(Course);
+        this.courseModels.clear();
+        subjDocument.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists())
+                    {
+                        int subjectNo = documentSnapshot.getLong("Total_Subject").intValue();
+                        List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+
+                        for (int itr = 1;itr <= subjectNo;itr++) {
+                            DocumentReference subjectReference = documentSnapshot.getDocumentReference("Subj" + itr);
+                            if (subjectReference != null) {
+                                tasks.add(subjectReference.get());
+                            }
+                        }
+
+                        Task<List<DocumentSnapshot>> combinedTask = Tasks.whenAllSuccess(tasks);
+
+                        combinedTask.addOnSuccessListener(documentSnapshots -> {
+                            for (DocumentSnapshot doc : documentSnapshots) {
+                                if (doc.exists()) {
+                                    if (doc.getBoolean("Display")) {
+                                        this.courseModels.add(new CourseModel(doc.getId(), doc.getString("Subject_Name"), doc.getString("Subject_Image")));
+                                    }
+                                }
+                            }
+                            loadCategoriesCallback.onCategoriesLoaded(courseModels);
+                        });
+                    }
+                });
     }
 
 }

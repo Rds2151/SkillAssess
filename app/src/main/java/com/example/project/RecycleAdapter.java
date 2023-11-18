@@ -49,6 +49,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
+                    int position = holder.getAdapterPosition();
                     onItemClickListener.onItemClick(position);
                 }
             }

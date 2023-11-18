@@ -1,8 +1,11 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,8 +33,9 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private String Course = null;
     private RecyclerView courseRV;
+    private FrameLayout dataNotFound;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -68,31 +73,67 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Bundle args = getArguments();
+        if(args != null) {
+            Course = args.getString("Course_Name");
+        }
         courseRV = rootView.findViewById(R.id.courseRV);
+        dataNotFound = rootView.findViewById(R.id.datanotfound);
         DataQuery dataQuery = new DataQuery();
 
         courseRV.setHasFixedSize(true);
         courseRV.setLayoutManager(new GridLayoutManager(requireActivity(),2));
 
-
-        dataQuery.loadCategories(new DataQuery.LoadCategoriesCallback() {
-            @Override
-            public void onCategoriesLoaded(ArrayList<CourseModel> courseModels) {
+        if (this.Course != null) {
+            dataQuery.loadSubjects(this.Course, courseModels -> {
                 updateRecyclerView(courseModels);
-            }
-        });
+            });
+        } else {
+            dataQuery.loadCategories(courseModels -> {
+                updateRecyclerView(courseModels);
+            });
+        }
+
         return rootView;
     }
 
     private void updateRecyclerView(ArrayList<CourseModel> courseModels) {
+        if (courseModels.size() == 0) {
+            courseRV.setVisibility(View.INVISIBLE);
+            dataNotFound.setVisibility(View.VISIBLE);
+            return;
+        }
         if(isAdded()) {
             RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels, requireActivity());
-            recycleAdapter.setOnItemClickListener(new RecycleAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    Toast.makeText(requireActivity(), ""+courseModels.get(position).getCourse_Name(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            if (this.Course == null) {
+                recycleAdapter.setOnItemClickListener(position -> {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                    HomeFragment homeFragment = new HomeFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Course_Name",courseModels.get(position).getCourse_id());
+                    homeFragment.setArguments(bundle);
+
+                    transaction.replace(R.id.fragment,homeFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
+            } else {
+                recycleAdapter.setOnItemClickListener(position -> {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    SetTimer setTimer = new SetTimer();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Subject_Id",courseModels.get(position).getCourse_id());
+                    setTimer.setArguments(bundle);
+
+                    fragmentTransaction.replace(R.id.fragment,setTimer);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                });
+            }
             courseRV.setAdapter(recycleAdapter);
         }
     }
