@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +21,9 @@ import java.util.ArrayList;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
-    private ArrayList<CourseModel> courseModels;
+    private final ArrayList<CourseModel> courseModels;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
     public RecycleAdapter(ArrayList<CourseModel> courseModels, Context context) {
         this.courseModels = courseModels;
@@ -43,8 +45,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
                 .load(currentCourse.getImg_URL())
                 .error(R.drawable.usericon)
                 .into(holder.courseImage);
-        holder.cardView.setOnClickListener(v -> {
-            Toast.makeText(context, ""+currentCourse.getCourse_Name(), Toast.LENGTH_SHORT).show();
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(position);
+                }
+            }
         });
     }
 
@@ -63,5 +70,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
             courseName = itemView.findViewById(R.id.courseTxt);
             cardView = itemView.findViewById(R.id.cardView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    // Setter method for the item click listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 }

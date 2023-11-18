@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -72,6 +73,8 @@ public class HomeFragment extends Fragment {
 
         courseRV.setHasFixedSize(true);
         courseRV.setLayoutManager(new GridLayoutManager(requireActivity(),2));
+
+
         dataQuery.loadCategories(new DataQuery.LoadCategoriesCallback() {
             @Override
             public void onCategoriesLoaded(ArrayList<CourseModel> courseModels) {
@@ -84,6 +87,12 @@ public class HomeFragment extends Fragment {
     private void updateRecyclerView(ArrayList<CourseModel> courseModels) {
         if(isAdded()) {
             RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels, requireActivity());
+            recycleAdapter.setOnItemClickListener(new RecycleAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Toast.makeText(requireActivity(), ""+courseModels.get(position).getCourse_Name(), Toast.LENGTH_SHORT).show();
+                }
+            });
             courseRV.setAdapter(recycleAdapter);
         }
     }

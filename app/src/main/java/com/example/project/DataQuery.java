@@ -127,7 +127,10 @@ public class DataQuery {
             firestore.collection("Courses").get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            this.courseModels.add(new CourseModel(doc.getString("Course_Name"),doc.getString("Course_Image")));
+                            if (doc.getBoolean("Display"))
+                            {
+                                this.courseModels.add(new CourseModel(doc.getString("Course_Name"),doc.getString("Course_Image")));
+                            }
                         }
                         loadCategoriesCallback.onCategoriesLoaded(courseModels);
                     })
