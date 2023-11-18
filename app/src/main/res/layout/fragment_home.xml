@@ -35,7 +35,77 @@
 
     </LinearLayout>
 
-    <!-- Contain Data -->
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_height="match_parent"
+        android:id="@+id/shimmerId">
+
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:paddingStart="14dp">
+
+            <include
+                layout="@layout/shimmer_layout"
+                android:layout_width="80dp"
+                android:layout_columnWeight=".5"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include
+                layout="@layout/shimmer_layout"
+                android:layout_width="80dp"
+                android:layout_columnWeight=".5"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include
+                layout="@layout/shimmer_layout"
+                android:layout_width="80dp"
+                android:layout_columnWeight=".5"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include
+                layout="@layout/shimmer_layout"
+                android:layout_width="80dp"
+                android:layout_columnWeight=".5"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include
+                layout="@layout/shimmer_layout"
+                android:layout_width="80dp"
+                android:layout_columnWeight=".5"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <include
+                layout="@layout/shimmer_layout"
+                android:layout_width="80dp"
+                android:layout_columnWeight=".5"
+                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"/>
+        </GridLayout>
+
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/courseRV"
         android:layout_width="match_parent"
@@ -43,14 +113,14 @@
         android:horizontalSpacing="8dp"
         android:layout_marginTop="80dp"
         android:verticalSpacing="8dp"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <FrameLayout
         android:id="@+id/datanotfound"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="300dp"

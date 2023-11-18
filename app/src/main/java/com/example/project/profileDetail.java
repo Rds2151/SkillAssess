@@ -14,17 +14,14 @@ class profileDetail {
     public profileDetail()
     {
         DataQuery dq = new DataQuery();
-        dq.fetchDetails(new DataQuery.DataCallback() {
-            @Override
-            public void onDataReceived(Map<String, Object> data) {
-                if (data.containsKey("Error")) {
-                    // Handle the error case
-                    String errorMessage = (String) data.get("Error");
-                    Log.d("profileDetail", "onDataReceived: "+errorMessage);
-                } else {
-                    // Data retrieval was successful
-                    updateDetail(data);
-                }
+        dq.fetchDetails(data -> {
+            if (data.containsKey("Error")) {
+                // Handle the error case
+                String errorMessage = (String) data.get("Error");
+                Log.d("profileDetail", "onDataReceived: "+errorMessage);
+            } else {
+                // Data retrieval was successful
+                updateDetail(data);
             }
         });
     }

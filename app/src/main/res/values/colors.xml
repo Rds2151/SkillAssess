@@ -31,4 +31,5 @@
     <color name="Btn_default">#D1BCFF</color>
     <color name="select_btn_hover">#9464FF</color>
     <color name="red">#ff1a1a</color>
+    <color name="shimmer_color">#dddddd</color>
 </resources>

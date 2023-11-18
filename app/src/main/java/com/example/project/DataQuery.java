@@ -92,7 +92,6 @@ public class DataQuery {
             db.collection("profile").document(uid).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         Map<String, Object> data = new HashMap<>();
-
                         if (documentSnapshot.exists()) {
                             data.put("Full_name", documentSnapshot.getString("Full_name"));
                             data.put("Birthdate", documentSnapshot.getString("Birthdate"));

@@ -14,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.Toast;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,7 @@ public class HomeFragment extends Fragment {
     private String Course = null;
     private RecyclerView courseRV;
     private FrameLayout dataNotFound;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -79,6 +83,9 @@ public class HomeFragment extends Fragment {
         }
         courseRV = rootView.findViewById(R.id.courseRV);
         dataNotFound = rootView.findViewById(R.id.datanotfound);
+        shimmerFrameLayout = rootView.findViewById(R.id.shimmerId);
+        shimmerFrameLayout.startShimmer();
+
         DataQuery dataQuery = new DataQuery();
 
         courseRV.setHasFixedSize(true);
@@ -98,12 +105,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateRecyclerView(ArrayList<CourseModel> courseModels) {
+        shimmerFrameLayout.stopShimmer();
+        shimmerFrameLayout.setVisibility(View.GONE);
         if (courseModels.size() == 0) {
-            courseRV.setVisibility(View.INVISIBLE);
             dataNotFound.setVisibility(View.VISIBLE);
             return;
         }
         if(isAdded()) {
+            courseRV.setVisibility(View.VISIBLE);
             RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels, requireActivity());
             if (this.Course == null) {
                 recycleAdapter.setOnItemClickListener(position -> {
