@@ -6,12 +6,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,12 +101,27 @@ public class SetTimer extends Fragment {
 
         submit.setOnClickListener(v -> {
             if(selectedTimer != -1) {
-                Intent startTest = new Intent(requireActivity(), Question_Activity.class);
-                startTest.putExtra("Timer",selectedTimer);
-                startTest.putExtra("Subject_Id",this.Subject_Id);
-                startActivity(startTest);
+                DataQuery dataQuery = new DataQuery();
+                dataQuery.getSubjectData(this.Subject_Id, new DataQuery.LoadQuestionCallback() {
+                    @Override
+                    public void onQuestionLoaded(ArrayList<QuestionModel> questionModels) {
+                        if (questionModels.size() < selectedTimer) {
+                            Toast.makeText(requireActivity(), "Oops! We currently have only " + questionModels.size() + " questions available for selection.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Intent startTest = new Intent(requireActivity(), Question_Activity.class);
+                        startTest.putParcelableArrayListExtra("Subject_Data",questionModels);
+                        startTest.putExtra("Timer",selectedTimer);
+                        startActivity(startTest);
+                    }
+
+                    @Override
+                    public void onQuestionLoadedFailed() {
+                        Toast.makeText(requireActivity().getApplicationContext(), "Error: Data not found", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
-                Toast.makeText(requireActivity(), "Please select a timer", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), "Please select a timer", Toast.LENGTH_LONG).show();
             }
         });
 

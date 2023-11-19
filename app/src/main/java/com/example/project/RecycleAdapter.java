@@ -24,12 +24,10 @@ import java.util.ArrayList;
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
     private final ArrayList<CourseModel> courseModels;
-    private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public RecycleAdapter(ArrayList<CourseModel> courseModels, Context context) {
+    public RecycleAdapter(ArrayList<CourseModel> courseModels) {
         this.courseModels = courseModels;
-        this.context = context;
     }
 
     @NonNull

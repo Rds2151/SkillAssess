@@ -4,4 +4,5 @@
     <attr name="home_color" format="reference|color" />
     <attr name="icon_color" format="reference|color" />
     <attr name="card_color" format="reference|color" />
+    <attr name="question_color" format="reference|color" />
 </resources>

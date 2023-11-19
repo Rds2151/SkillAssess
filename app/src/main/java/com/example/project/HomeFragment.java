@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
         }
         if(isAdded()) {
             courseRV.setVisibility(View.VISIBLE);
-            RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels, requireActivity());
+            RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels);
             if (this.Course == null) {
                 recycleAdapter.setOnItemClickListener(position -> {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

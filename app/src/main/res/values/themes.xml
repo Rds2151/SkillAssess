@@ -7,6 +7,7 @@
         <item name="home_color">@color/blue</item> <!-- Use black for light theme -->
         <item name="icon_color">@color/pressed_button_color</item>
         <item name="card_color">@color/card_layout_color</item>
+        <item name="question_color">@color/select_btn_hover</item>
     </style>
 
     <style name="Theme.Project" parent="Base.Theme.Project" />
