@@ -141,34 +141,36 @@ public class DataQuery {
     protected void loadSubjects(String Course, LoadCategoriesCallback loadCategoriesCallback) {
         DocumentReference subjDocument = firestore.collection("Courses").document(Course);
         this.courseModels.clear();
-        subjDocument.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists())
-                    {
-                        int subjectNo = documentSnapshot.getLong("Total_Subject").intValue();
-                        List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+        executorService.execute(() -> {
+            subjDocument.get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists())
+                        {
+                            int subjectNo = documentSnapshot.getLong("Total_Subject").intValue();
+                            List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
 
-                        for (int itr = 1;itr <= subjectNo;itr++) {
-                            DocumentReference subjectReference = documentSnapshot.getDocumentReference("Subj" + itr);
-                            if (subjectReference != null) {
-                                tasks.add(subjectReference.get());
-                            }
-                        }
-
-                        Task<List<DocumentSnapshot>> combinedTask = Tasks.whenAllSuccess(tasks);
-
-                        combinedTask.addOnSuccessListener(documentSnapshots -> {
-                            for (DocumentSnapshot doc : documentSnapshots) {
-                                if (doc.exists()) {
-                                    if (doc.getBoolean("Display")) {
-                                        this.courseModels.add(new CourseModel(doc.getId(), doc.getString("Subject_Name"), doc.getString("Subject_Image")));
-                                    }
+                            for (int itr = 1;itr <= subjectNo;itr++) {
+                                DocumentReference subjectReference = documentSnapshot.getDocumentReference("Subj" + itr);
+                                if (subjectReference != null) {
+                                    tasks.add(subjectReference.get());
                                 }
                             }
-                            loadCategoriesCallback.onCategoriesLoaded(courseModels);
-                        });
-                    }
-                });
+
+                            Task<List<DocumentSnapshot>> combinedTask = Tasks.whenAllSuccess(tasks);
+
+                            combinedTask.addOnSuccessListener(documentSnapshots -> {
+                                for (DocumentSnapshot doc : documentSnapshots) {
+                                    if (doc.exists()) {
+                                        if (doc.getBoolean("Display")) {
+                                            this.courseModels.add(new CourseModel(doc.getId(), doc.getString("Subject_Name"), doc.getString("Subject_Image")));
+                                        }
+                                    }
+                                }
+                                loadCategoriesCallback.onCategoriesLoaded(courseModels);
+                            });
+                        }
+                    });
+        });
     }
 
 }

@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,11 +42,22 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, int position) {
         CourseModel currentCourse = courseModels.get(position);
+        holder.shimmerFrameLayout.stopShimmer();
+
         holder.courseName.setText(currentCourse.getCourse_Name());
         Picasso.get()
                 .load(currentCourse.getImg_URL())
                 .error(R.drawable.usericon)
-                .into(holder.courseImage);
+                .into(holder.courseImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.shimmerFrameLayout.stopShimmer(); // stop the shimmer effect when the image is successfully loaded
+                        holder.shimmerFrameLayout.setVisibility(View.GONE); // hide the shimmer container
+                        holder.courseImage.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onError(Exception e) {}
+                });
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,11 +77,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView courseImage;
         CardView cardView;
+        ShimmerFrameLayout shimmerFrameLayout;
         TextView courseName;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             courseImage = itemView.findViewById(R.id.courseImg);
             courseName = itemView.findViewById(R.id.courseTxt);
+            shimmerFrameLayout = itemView.findViewById(R.id.shimmer_Img);
             cardView = itemView.findViewById(R.id.cardView);
         }
     }

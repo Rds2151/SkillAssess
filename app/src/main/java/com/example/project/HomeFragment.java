@@ -92,13 +92,9 @@ public class HomeFragment extends Fragment {
         courseRV.setLayoutManager(new GridLayoutManager(requireActivity(),2));
 
         if (this.Course != null) {
-            dataQuery.loadSubjects(this.Course, courseModels -> {
-                updateRecyclerView(courseModels);
-            });
+            dataQuery.loadSubjects(this.Course, this::updateRecyclerView);
         } else {
-            dataQuery.loadCategories(courseModels -> {
-                updateRecyclerView(courseModels);
-            });
+            dataQuery.loadCategories(this::updateRecyclerView);
         }
 
         return rootView;

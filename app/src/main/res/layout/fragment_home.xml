@@ -32,7 +32,6 @@
             android:layout_marginStart="8dp"
             android:gravity="right"
             android:queryHint="Search..." />
-
     </LinearLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -42,7 +41,6 @@
         android:id="@+id/shimmerId">
 
         <GridLayout
-            android:id="@+id/gridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"

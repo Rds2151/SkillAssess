@@ -16,6 +16,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shimmer_Img">
+
+            <include layout="@layout/shimmer_placeholder"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginBottom="1dp"/>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <ImageView
             android:id="@+id/courseImg"
             android:layout_width="80dp"
@@ -24,7 +39,8 @@
             android:layout_marginTop="6dp"
             android:layout_marginStart="14dp"
             android:layout_marginBottom="1dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
 
         <TextView
             style="@style/TextAppearance.AppCompat.Medium"
