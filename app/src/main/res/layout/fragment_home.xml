@@ -33,7 +33,7 @@
             android:gravity="right"
             android:queryHint="Search..." />
     </LinearLayout>
-
+*
     <com.facebook.shimmer.ShimmerFrameLayout
         android:layout_width="match_parent"
         android:layout_marginTop="80dp"

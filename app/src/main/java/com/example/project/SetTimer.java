@@ -136,4 +136,5 @@ public class SetTimer extends Fragment {
         btn60.setBackgroundColor(set);
         btn.setBackgroundColor(color);
     }
+
 }

@@ -20,6 +20,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,11 +188,16 @@ public class DataQuery {
                             List<String> options = (List<String>) doc.get("Options");
                             dataList.add(new QuestionModel(doc.getString("Text"),doc.getString("CorrectAnswer"),options));
                         }
-                        if ( dataList.isEmpty()) {
+
+                        Collections.shuffle(dataList);
+
+                        int questionsToFetch = Math.min(60,dataList.size());
+                        ArrayList<QuestionModel> randomQuestions = new ArrayList<>(dataList.subList(0,questionsToFetch));
+                        if ( randomQuestions.isEmpty()) {
                             loadQuestionCallback.onQuestionLoadedFailed();
                             return;
                         }
-                        loadQuestionCallback.onQuestionLoaded(dataList);
+                        loadQuestionCallback.onQuestionLoaded(randomQuestions);
                     })
                     .addOnFailureListener(e -> loadQuestionCallback.onQuestionLoadedFailed());
         });

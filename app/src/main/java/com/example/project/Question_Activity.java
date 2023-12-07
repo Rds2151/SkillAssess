@@ -1,11 +1,11 @@
 package com.example.project;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -13,38 +13,67 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Time;
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Question_Activity extends AppCompatActivity {
 
-    RadioGroup optionGroup;
-    TextView questionNo,questionText,timeTxt;
-    ArrayList<QuestionModel> dataList = null;
-    String selectedOptions = null;
-    int timerValue;
-    int initialTimeSeconds;
-    int currentQuestion = 0;
-    Button nextBtn;
+    private RadioGroup optionGroup;
+    private TextView questionNo, questionText, timeTxt;
+    private ArrayList<QuestionModel> dataList = null;
+    private String selectedOptions = null;
+    private int timerValue;
+    private int initialTimeSeconds;
+    private int currentQuestion = 0;
+    private Button nextBtn;
+    private Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        initializeViews();
+        initializeDataFromIntent();
+
+        setOnBackPressedCallback();
+
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(() -> {
+            uiHandler.post(() -> updateTimerDisplay());
+            updateTimer();
+
+            if (initialTimeSeconds < 0) {
+                service.shutdown();
+                submitData();
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+
+        displayQuestion();
+
+        setOptionGroupListener();
+
+        nextBtn.setOnClickListener(v -> loadNextQuestion());
+    }
+
+    private void initializeViews() {
         questionNo = findViewById(R.id.QuestionNo);
         questionText = findViewById(R.id.questionText);
         timeTxt = findViewById(R.id.timeTxt);
         optionGroup = findViewById(R.id.optionGroup);
         nextBtn = findViewById(R.id.nextBtn);
+    }
 
+    private void initializeDataFromIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            timerValue = intent.getIntExtra("Timer",0);
+            timerValue = intent.getIntExtra("Timer", 0);
             dataList = intent.getParcelableArrayListExtra("Subject_Data");
 
             if (timerValue == 0 || dataList == null) {
@@ -55,33 +84,49 @@ public class Question_Activity extends AppCompatActivity {
         } else {
             finish();
         }
-
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(() -> {
-            String timerDisplay = formatTime(initialTimeSeconds);
-            runOnUiThread(() -> timeTxt.setText(timerDisplay));
-
-            initialTimeSeconds--;
-            if (initialTimeSeconds < 0) {
-                service.shutdown();
-                submitData();
-            }
-        },0,1, TimeUnit.SECONDS);
-
-        displayQuestion();
-
-        optionGroup.setOnCheckedChangeListener((radioGroup, id) -> {
-            getSelectedOptions(radioGroup,id);
-        });
-
-        nextBtn.setOnClickListener(v -> {
-            loadNextQuestion();
-        });
-
-
     }
 
-    private void getSelectedOptions(RadioGroup radioGroup,int id) {
+    private void setOnBackPressedCallback() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                showCloseQuizDialog();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    private void showCloseQuizDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Question_Activity.this);
+        builder.setTitle("Close Quiz?")
+                .setMessage("Are you sure you want to close the quiz? Your progress will be lost.")
+                .setCancelable(false)
+                .setPositiveButton("Close Quiz", (dialogInterface, i) -> {
+                    dataList.clear();
+                    finish();
+                })
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void updateTimerDisplay() {
+        String timerDisplay = formatTime(initialTimeSeconds);
+        timeTxt.setText(timerDisplay);
+    }
+
+    private void updateTimer() {
+        initialTimeSeconds--;
+    }
+
+    private void setOptionGroupListener() {
+        optionGroup.setOnCheckedChangeListener((radioGroup, id) -> uiHandler.post(() -> {
+            getSelectedOptions(radioGroup, id);
+        }));
+    }
+
+    private void getSelectedOptions(RadioGroup radioGroup, int id) {
         for (int i = 0; i < radioGroup.getChildCount(); i++) {
             RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
             radioButton.setBackgroundResource(R.drawable.borderline);
@@ -90,18 +135,32 @@ public class Question_Activity extends AppCompatActivity {
         RadioButton selectedRadioButton = findViewById(id);
         selectedRadioButton.setBackgroundResource(R.drawable.button_pressed);
         selectedOptions = selectedRadioButton.getText().toString();
+        selectedRadioButton.setChecked(false);
     }
 
     private void loadNextQuestion() {
         if (selectedOptions == null) {
-            Toast.makeText(this, "Please select a Option", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
             return;
         }
         dataList.get(currentQuestion).setSelectedAnswer(selectedOptions);
-        if (currentQuestion == timerValue-2) nextBtn.setText("Submit");
-        if (currentQuestion == timerValue-1) submitData();
-        this.currentQuestion++;
-        displayQuestion();
+
+        if (currentQuestion == timerValue - 2) {
+            nextBtn.setText("Submit");
+        }
+
+        if (currentQuestion == timerValue - 1) {
+            submitData();
+        }
+
+        currentQuestion++;
+        selectedOptions = null;
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                displayQuestion();
+            }
+        });
     }
 
     private void displayQuestion() {
@@ -122,6 +181,9 @@ public class Question_Activity extends AppCompatActivity {
     }
 
     private void submitData() {
-
+        Intent resultIntent = new Intent(getApplicationContext(),result.class);
+        resultIntent.putParcelableArrayListExtra("data",dataList);
+        resultIntent.putExtra("timeValue",timerValue);
+        startActivity(resultIntent);
     }
 }

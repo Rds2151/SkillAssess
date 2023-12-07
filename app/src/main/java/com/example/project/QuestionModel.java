@@ -59,6 +59,10 @@ public class QuestionModel implements Parcelable {
         return SelectedAnswer;
     }
 
+    public boolean isAnswerCorrect() {
+        return this.CorrectAnswer.equals(this.SelectedAnswer);
+    }
+
     public void setSelectedAnswer(String SelectedAnswer) {
         this.SelectedAnswer = SelectedAnswer;
     }

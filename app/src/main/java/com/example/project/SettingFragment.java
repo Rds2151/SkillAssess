@@ -79,23 +79,15 @@ public class SettingFragment extends Fragment {
         builder.setTitle("Log Out?")
                 .setMessage("Are you sure, you want to log out?")
                 .setCancelable(false)
-                .setPositiveButton("Log out", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.remove("email");
-                        editor.apply();
-                        startActivity(new Intent(requireActivity(), login_activity.class));
-                        requireActivity().finish(); // Optionally finish the current activity
-                    }
+                .setPositiveButton("Log out", (dialogInterface, i) -> {
+                    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    startActivity(new Intent(requireActivity(), login_activity.class));
+                    requireActivity().finish(); // Optionally finish the current activity
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
 
         AlertDialog dialog = builder.create();
         dialog.show();

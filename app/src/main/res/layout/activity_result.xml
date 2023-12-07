@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#242A40">
+
+    <ImageView
+        android:id="@+id/cancel_button"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="11dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/cardlayout"
+        android:backgroundTint="#CBDCE6"
+        android:minHeight="500dp">
+
+        <ImageView
+            android:id="@+id/TrophyImg"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/trophy" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:id="@+id/header_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TrophyImg"
+            android:layout_marginTop="11dp"
+            android:gravity="center"
+            android:text="Congrats!"
+            android:textColor="@color/black"
+            android:textFontWeight="750"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/percent"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TrophyImg"
+            android:layout_marginTop="65dp"
+            android:gravity="center"
+            android:text="90% Score"
+            android:textColor="#43B378"
+            android:textFontWeight="650"
+            android:textSize="45dp" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/percent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Quiz completed Successfully."
+            android:textColor="@color/black"
+            android:textFontWeight="800"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/result_detail"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/percent"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="40dp"
+            android:gravity="center_horizontal"
+            android:text="You attempted 60 questions and got 55 correct answers."
+            android:textColor="@color/black"
+            android:textFontWeight="500"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/ViewResult"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_below="@+id/result_detail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="22dp"
+            android:layout_marginTop="-12dp"
+            android:backgroundTint="#7B5DFF"
+            android:paddingStart="64dp"
+            android:paddingEnd="64dp"
+            android:text="View Result"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+</RelativeLayout>

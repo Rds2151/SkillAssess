@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textFontWeight="523"
         android:layout_marginBottom="16dp"
-        android:text="Welcome to Quiz XYZW"
+        android:text="Welcome to SkillAssess"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/msg"
         app:layout_constraintEnd_toEndOf="parent"
