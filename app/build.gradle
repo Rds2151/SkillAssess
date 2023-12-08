@@ -35,8 +35,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.firebase:firebase-storage:20.3.0'
-    implementation 'com.google.firebase:firebase-auth:22.2.0'
-    implementation 'com.google.firebase:firebase-firestore:24.9.1'
+    implementation 'com.google.firebase:firebase-auth:22.3.0'
+    implementation 'com.google.firebase:firebase-firestore:24.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.firebase:firebase-database:20.3.0'
     testImplementation 'junit:junit:4.13.2'
@@ -45,4 +45,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'jp.wasabeef:richeditor-android:2.0.0'
 }

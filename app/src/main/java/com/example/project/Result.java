@@ -4,16 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class result extends AppCompatActivity {
+public class Result extends AppCompatActivity {
     TextView percentTextView, resultDetail, header_title;
+    Button viewResultBtn;
     ImageView cancel;
 
     @Override
@@ -29,6 +29,7 @@ public class result extends AppCompatActivity {
         resultDetail = findViewById(R.id.result_detail);
         header_title = findViewById(R.id.header_title);
         cancel = findViewById(R.id.cancel_button);
+        viewResultBtn = findViewById(R.id.ViewResult);
 
         int totalCorrectAns = 0;
         for (int i = 0; i < timerValue; i++) {
@@ -51,7 +52,14 @@ public class result extends AppCompatActivity {
         }
 
         cancel.setOnClickListener(v -> {
-            startActivity(new Intent(result.this, home_activity.class));
+            Intent reintent = new Intent(Result.this, home_activity.class);
+            reintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(reintent);
+            finish();
+        });
+
+        viewResultBtn.setOnClickListener(v -> {
+            startActivity(new Intent(Result.this,ViewResult.class));
             finish();
         });
     }

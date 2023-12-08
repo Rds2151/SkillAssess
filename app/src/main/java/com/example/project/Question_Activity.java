@@ -1,12 +1,9 @@
 package com.example.project;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -20,7 +17,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -201,8 +197,7 @@ public class Question_Activity extends AppCompatActivity {
         dq.submitData(data, new DataQuery.SubmitDataCallback() {
             @Override
             public void onSubmitData() {
-                Log.d("TAG", "onDataChange: ");
-                Intent resultIntent = new Intent(getApplicationContext(),result.class);
+                Intent resultIntent = new Intent(getApplicationContext(), Result.class);
                 resultIntent.putParcelableArrayListExtra("data",dataList);
                 resultIntent.putExtra("timeValue",timerValue);
                 startActivity(resultIntent);

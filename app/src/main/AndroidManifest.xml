@@ -16,10 +16,10 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
-            android:name=".viewResult"
+            android:name=".ViewResult"
             android:exported="false" />
         <activity
-            android:name=".result"
+            android:name=".Result"
             android:exported="false" />
         <activity
             android:name=".profile_activity"

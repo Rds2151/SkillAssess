@@ -27,7 +27,7 @@ public class home_activity extends AppCompatActivity {
         homebtn = findViewById(R.id.homeImg);
         recentbtn = findViewById(R.id.recentImg);
         settingbtn = findViewById(R.id.settingImg);
-
+        
         TypedValue typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.home_color, typedValue, true);
         color = typedValue.data;
