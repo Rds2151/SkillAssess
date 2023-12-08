@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -18,6 +20,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -32,6 +37,7 @@ public class Question_Activity extends AppCompatActivity {
     private int initialTimeSeconds;
     private int currentQuestion = 0;
     private Button nextBtn;
+    private ProgressBar progressBar;
     private Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -68,6 +74,7 @@ public class Question_Activity extends AppCompatActivity {
         timeTxt = findViewById(R.id.timeTxt);
         optionGroup = findViewById(R.id.optionGroup);
         nextBtn = findViewById(R.id.nextBtn);
+        progressBar = findViewById(R.id.progress_circular);
     }
 
     private void initializeDataFromIntent() {
@@ -103,6 +110,7 @@ public class Question_Activity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Close Quiz", (dialogInterface, i) -> {
                     dataList.clear();
+                    startActivity(new Intent(this, home_activity.class));
                     finish();
                 })
                 .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
@@ -148,11 +156,10 @@ public class Question_Activity extends AppCompatActivity {
         if (currentQuestion == timerValue - 2) {
             nextBtn.setText("Submit");
         }
-
         if (currentQuestion == timerValue - 1) {
             submitData();
+            return;
         }
-
         currentQuestion++;
         selectedOptions = null;
         uiHandler.post(new Runnable() {
@@ -181,9 +188,33 @@ public class Question_Activity extends AppCompatActivity {
     }
 
     private void submitData() {
-        Intent resultIntent = new Intent(getApplicationContext(),result.class);
-        resultIntent.putParcelableArrayListExtra("data",dataList);
-        resultIntent.putExtra("timeValue",timerValue);
-        startActivity(resultIntent);
+        nextBtn.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        List<Map<String,Object>> data = new ArrayList<>();
+
+        for(int i = 0;i < dataList.size();i++)
+        {
+            data.add(dataList.get(i).getData());
+        }
+        DataQuery dq = new DataQuery();
+        dq.submitData(data, new DataQuery.SubmitDataCallback() {
+            @Override
+            public void onSubmitData() {
+                Log.d("TAG", "onDataChange: ");
+                Intent resultIntent = new Intent(getApplicationContext(),result.class);
+                resultIntent.putParcelableArrayListExtra("data",dataList);
+                resultIntent.putExtra("timeValue",timerValue);
+                startActivity(resultIntent);
+                finish();
+            }
+
+            @Override
+            public void onSubmitDataFailed(String error) {
+                Toast.makeText(Question_Activity.this, ""+error, Toast.LENGTH_SHORT).show();
+                nextBtn.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 }

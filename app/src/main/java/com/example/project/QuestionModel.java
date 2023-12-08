@@ -6,7 +6,11 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuestionModel implements Parcelable {
     String question;
@@ -69,6 +73,16 @@ public class QuestionModel implements Parcelable {
 
     public List<String> getOptions() {
         return Options;
+    }
+
+    public Map<String,Object> getData() {
+        Map<String,Object> data = new HashMap<>();
+        data.put("Text",getQuestion());
+        data.put("CorrectAnswer",getCorrectAnswer());
+        data.put("SelectedAnswer",getSelectedAnswer());
+        data.put("Options",getOptions());
+
+        return data;
     }
 
     public void setOptions(List<String> options) {

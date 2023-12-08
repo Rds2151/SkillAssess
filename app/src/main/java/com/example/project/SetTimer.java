@@ -102,7 +102,7 @@ public class SetTimer extends Fragment {
         submit.setOnClickListener(v -> {
             if(selectedTimer != -1) {
                 DataQuery dataQuery = new DataQuery();
-                dataQuery.getSubjectData(this.Subject_Id, new DataQuery.LoadQuestionCallback() {
+                dataQuery.getSubjectData(this.Subject_Id,selectedTimer, new DataQuery.LoadQuestionCallback() {
                     @Override
                     public void onQuestionLoaded(ArrayList<QuestionModel> questionModels) {
                         if (questionModels.size() < selectedTimer) {
@@ -113,6 +113,7 @@ public class SetTimer extends Fragment {
                         startTest.putParcelableArrayListExtra("Subject_Data",questionModels);
                         startTest.putExtra("Timer",selectedTimer);
                         startActivity(startTest);
+                        requireActivity().getSupportFragmentManager().beginTransaction().remove(SetTimer.this).commit();
                     }
 
                     @Override

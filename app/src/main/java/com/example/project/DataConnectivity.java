@@ -32,11 +32,6 @@ public class DataConnectivity {
     private String passwd, cpasswd;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private FirebaseAuth mAuth;
-    public static ArrayList<CourseModel> courseModels = new ArrayList<>();
-
-    public DataConnectivity() {
-        this.mAuth = FirebaseAuth.getInstance();
-    }
 
     public DataConnectivity(String email_addr) {
         this.email_addr = email_addr;

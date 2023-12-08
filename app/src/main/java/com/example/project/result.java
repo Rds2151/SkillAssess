@@ -51,7 +51,8 @@ public class result extends AppCompatActivity {
         }
 
         cancel.setOnClickListener(v -> {
-            getOnBackPressedDispatcher().onBackPressed();
+            startActivity(new Intent(result.this, home_activity.class));
+            finish();
         });
     }
 }

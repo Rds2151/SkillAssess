@@ -1,14 +1,21 @@
 package com.example.project;
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,6 +38,7 @@ import java.util.concurrent.Executors;
 public class DataQuery {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private FirebaseFirestore firestore;
+    private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private StorageReference storageReference;
     public ArrayList<CourseModel> courseModels = new ArrayList<>();
@@ -38,6 +46,7 @@ public class DataQuery {
     public DataQuery() {
         this.firestore = FirebaseFirestore.getInstance();
         this.mAuth = FirebaseAuth.getInstance();
+        this.database = FirebaseDatabase.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
     }
 
@@ -177,7 +186,7 @@ public class DataQuery {
         });
     }
 
-    protected void getSubjectData(String subjectId,LoadQuestionCallback loadQuestionCallback) {
+    protected void getSubjectData(String subjectId,int size,LoadQuestionCallback loadQuestionCallback) {
         ArrayList<QuestionModel> dataList = new ArrayList<>();
         executorService.execute(() -> {
             CollectionReference questionsCollectionRef = firestore.collection("Subjects").document(subjectId).collection("Questions");
@@ -191,7 +200,7 @@ public class DataQuery {
 
                         Collections.shuffle(dataList);
 
-                        int questionsToFetch = Math.min(60,dataList.size());
+                        int questionsToFetch = Math.min(size,dataList.size());
                         ArrayList<QuestionModel> randomQuestions = new ArrayList<>(dataList.subList(0,questionsToFetch));
                         if ( randomQuestions.isEmpty()) {
                             loadQuestionCallback.onQuestionLoadedFailed();
@@ -208,4 +217,36 @@ public class DataQuery {
         public void onQuestionLoadedFailed();
     }
 
+
+
+    public interface SubmitDataCallback {
+        public void onSubmitData();
+        public void onSubmitDataFailed(String errror);
+    }
+
+    protected void submitData(List<Map<String, Object>> dataList,SubmitDataCallback submitDataCallback) {
+        String uid = mAuth.getCurrentUser().getUid();
+        DatabaseReference databaseReference = database.getReference("QuizHistory").child(uid);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long numberOfQuiz = snapshot.getChildrenCount();
+                DatabaseReference quizReference = databaseReference.child("Quiz"+(++numberOfQuiz));
+                for(int i = 0;i < dataList.size();i++) {
+                    quizReference.child("Question"+(i+1)).setValue(dataList.get(i)).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            submitDataCallback.onSubmitData();
+                        } else {
+                            submitDataCallback.onSubmitDataFailed(task.getException().getMessage());
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                submitDataCallback.onSubmitDataFailed(error.getMessage());
+            }
+        });
+    }
 }
