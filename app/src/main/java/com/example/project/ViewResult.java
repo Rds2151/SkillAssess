@@ -1,36 +1,52 @@
 package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewResult extends AppCompatActivity {
 
-    TextView QuestionText,SelectedAns,CorrectAns,optionsText;
+    RecyclerView recyclerView;
+    ImageButton backBtn;
+    private int timeValue;
+    private ArrayList<QuestionModel> dataList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_result);
 
-        optionsText = findViewById(R.id.optionsText);
+        Intent intent = getIntent();
+        timeValue = intent.getIntExtra("timeValue",0);
+        dataList = intent.getParcelableArrayListExtra("data");
 
-        float density = getResources().getDisplayMetrics().density;
-
-        StringBuilder optionsStringBuilder = new StringBuilder();
-        optionsStringBuilder.append("Options:\n");
-
-        int numberOfTabs = (int) (density * 2);
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < numberOfTabs; j++) {
-                optionsStringBuilder.append("\t");
-            }
-            optionsStringBuilder.append("o akdjf\n");
+        if (dataList == null || dataList.isEmpty()) {
+            finish();
         }
 
-        optionsText.setText(optionsStringBuilder.toString());
-        optionsText.setTextSize(16); // in sp
-        optionsText.setPadding(0, 0, 0, 4);
+        recyclerView = findViewById(R.id.resultRV);
+        backBtn = findViewById(R.id.backBtn);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        loadQuestion(dataList);
+
+        backBtn.setOnClickListener(v -> {
+            finish();
+        });
+    }
+
+    private void loadQuestion(ArrayList<QuestionModel> questionModels) {
+        ResultAdapter resultAdapter = new ResultAdapter(questionModels);
+        recyclerView.setAdapter(resultAdapter);
     }
 }

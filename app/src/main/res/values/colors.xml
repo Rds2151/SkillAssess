@@ -32,4 +32,6 @@
     <color name="select_btn_hover">#9464FF</color>
     <color name="red">#ff1a1a</color>
     <color name="shimmer_color">#dddddd</color>
+    <color name="selectColor">#E87E7E</color>
+    <color name="correctColor">#008000</color>
 </resources>

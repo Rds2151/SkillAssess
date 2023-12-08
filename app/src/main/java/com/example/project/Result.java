@@ -1,5 +1,7 @@
 package com.example.project;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,8 @@ public class Result extends AppCompatActivity {
     TextView percentTextView, resultDetail, header_title;
     Button viewResultBtn;
     ImageView cancel;
+    private int timerValue;
+    private ArrayList<QuestionModel> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +27,8 @@ public class Result extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         Intent intent = getIntent();
-        int timerValue = intent.getIntExtra("timeValue",0);
-        ArrayList<QuestionModel> dataList = intent.getParcelableArrayListExtra("data");
+        timerValue = intent.getIntExtra("timeValue",0);
+        dataList = intent.getParcelableArrayListExtra("data");
 
         percentTextView = findViewById(R.id.percent);
         resultDetail = findViewById(R.id.result_detail);
@@ -40,7 +45,6 @@ public class Result extends AppCompatActivity {
 
         if (totalCorrectAns != 0) {
             int percentage = ((totalCorrectAns*100)/timerValue);
-            Toast.makeText(this, timerValue+"", Toast.LENGTH_SHORT).show();
 
             resultDetail.setText("You attempted "+timerValue+" questions and got "+totalCorrectAns+" correct answers.");
             percentTextView.setText(percentage+"% Score");
@@ -59,8 +63,23 @@ public class Result extends AppCompatActivity {
         });
 
         viewResultBtn.setOnClickListener(v -> {
-            startActivity(new Intent(Result.this,ViewResult.class));
+            Intent viewResultIntent = new Intent(Result.this,ViewResult.class);
+            viewResultIntent.putParcelableArrayListExtra("data",dataList);
+            viewResultIntent.putExtra("timeValue",timerValue);
+            startActivity(viewResultIntent);
             finish();
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent reintent = new Intent(Result.this, home_activity.class);
+                reintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(reintent);
+                finish();
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 }
