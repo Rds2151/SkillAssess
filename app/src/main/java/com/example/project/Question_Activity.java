@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -188,19 +189,26 @@ public class Question_Activity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         List<Map<String,Object>> data = new ArrayList<>();
+        Map<String,Object> total = new HashMap<>();
+        int Total_Correct = 0;
 
         for(int i = 0;i < dataList.size();i++)
         {
             data.add(dataList.get(i).getData());
+            if (dataList.get(i).isAnswerCorrect()) {
+                Total_Correct++;
+            }
         }
+
         DataQuery dq = new DataQuery();
-        dq.submitData(data, new DataQuery.SubmitDataCallback() {
+        dq.submitData(data,Total_Correct, new DataQuery.SubmitDataCallback() {
             @Override
             public void onSubmitData() {
                 Intent resultIntent = new Intent(getApplicationContext(), Result.class);
                 resultIntent.putParcelableArrayListExtra("data",dataList);
                 resultIntent.putExtra("timeValue",timerValue);
                 startActivity(resultIntent);
+                dataList.clear();
                 finish();
             }
 

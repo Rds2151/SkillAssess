@@ -15,21 +15,27 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -53,7 +59,6 @@ public class DataQuery {
     protected CompletableFuture<String> updateProfile(Uri imageURI, String Name, String birthDate, String Gender) {
         String uid = mAuth.getCurrentUser().getUid();
         CompletableFuture<String> updateResult = new CompletableFuture<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = new HashMap<>();
 
         // Create a reference to the profile image in Firebase Storage
@@ -74,7 +79,7 @@ public class DataQuery {
                                         data.put("Total_Score", MainActivity.profileDetail.Total_Score);
 
                                         // Update the profile data in Firestore
-                                        db.collection("profile").document(uid).set(data)
+                                        firestore.collection("profile").document(uid).set(data)
                                                 .addOnSuccessListener(aVoid -> {
                                                     MainActivity.profileDetail.updateDetail(data);
                                                     updateResult.complete("Profile updated successfully");
@@ -98,11 +103,10 @@ public class DataQuery {
 
     protected void fetchDetails(com.example.project.DataQuery.DataCallback callback) {
         String uid = mAuth.getCurrentUser().getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         StorageReference profileImageReference = storageReference.child("Profile_Images/" + uid);
 
         executorService.execute(() -> {
-            db.collection("profile").document(uid).get()
+            firestore.collection("profile").document(uid).get()
                     .addOnSuccessListener(documentSnapshot -> {
                         Map<String, Object> data = new HashMap<>();
                         if (documentSnapshot.exists()) {
@@ -217,31 +221,99 @@ public class DataQuery {
         public void onQuestionLoadedFailed();
     }
 
-
-
     public interface SubmitDataCallback {
         public void onSubmitData();
         public void onSubmitDataFailed(String errror);
     }
 
-    protected void submitData(List<Map<String, Object>> dataList,SubmitDataCallback submitDataCallback) {
+    protected void submitData(List<Map<String, Object>> dataList,int Total_Correct,SubmitDataCallback submitDataCallback) {
         String uid = mAuth.getCurrentUser().getUid();
         DatabaseReference databaseReference = database.getReference("QuizHistory").child(uid);
+
+        executorService.execute(() -> {
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    long numberOfQuiz = snapshot.getChildrenCount();
+                    DatabaseReference quizReference = databaseReference.child("Quiz"+(++numberOfQuiz));
+
+                    long currentTimeMillis = System.currentTimeMillis();
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
+                    String formattedDate = sdf.format(new Date(currentTimeMillis));
+
+                    Map<String, Object> quizData = new HashMap<>();
+                    quizData.put("Total_Correct", Total_Correct);
+                    quizData.put("formattedDate", formattedDate);
+
+                    for (int i = 0; i < dataList.size(); i++) {
+                        quizData.put("Question" + (i + 1), dataList.get(i));
+                    }
+
+                    quizReference.setValue(quizData).addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            updateScore(Total_Correct, new SubmitDataCallback() {
+                                @Override
+                                public void onSubmitData() {
+                                    submitDataCallback.onSubmitData();
+                                }
+
+                                @Override
+                                public void onSubmitDataFailed(String errror) {
+                                    submitDataCallback.onSubmitDataFailed(errror);
+                                }
+                            });
+                        } else {
+                            submitDataCallback.onSubmitDataFailed(task.getException().getMessage());
+                        }
+                    });
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    submitDataCallback.onSubmitDataFailed(error.getMessage());
+                }
+            });
+        });
+    }
+
+    private void updateScore(int Score,SubmitDataCallback submitDataCallback) {
+        String uid = mAuth.getCurrentUser().getUid();
+        executorService.execute(() -> {
+            firestore.collection("profile").document(uid).update("Total_Score", FieldValue.increment(Score)).addOnCompleteListener(task -> {
+                if(task.isSuccessful()) {
+                    submitDataCallback.onSubmitData();
+                } else {
+                    submitDataCallback.onSubmitDataFailed(task.getException().getMessage());
+                }
+            });
+        });
+    }
+
+    protected void fetchData(List<Map<String, Object>> dataList,int Total_Correct,SubmitDataCallback submitDataCallback) {
+        String uid = mAuth.getCurrentUser().getUid();
+        DatabaseReference databaseReference = database.getReference("QuizHistory").child(uid);
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long numberOfQuiz = snapshot.getChildrenCount();
                 DatabaseReference quizReference = databaseReference.child("Quiz"+(++numberOfQuiz));
-                for(int i = 0;i < dataList.size();i++) {
-                    quizReference.child("Question"+(i+1)).setValue(dataList.get(i)).addOnCompleteListener(task -> {
-                        if(task.isSuccessful()) {
-                            submitDataCallback.onSubmitData();
-                        } else {
-                            submitDataCallback.onSubmitDataFailed(task.getException().getMessage());
-                        }
-                    });
+
+                Map<String, Object> quizData = new HashMap<>();
+                quizData.put("Total_Correct", Total_Correct);
+
+                for (int i = 0; i < dataList.size(); i++) {
+                    quizData.put("Question" + (i + 1), dataList.get(i));
                 }
+
+                quizReference.setValue(quizData).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
+                        submitDataCallback.onSubmitData();
+                    } else {
+                        submitDataCallback.onSubmitDataFailed(task.getException().getMessage());
+                    }
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -1,11 +1,13 @@
 package com.example.project;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -41,12 +43,30 @@ public class ViewResult extends AppCompatActivity {
         loadQuestion(dataList);
 
         backBtn.setOnClickListener(v -> {
+            Intent Viewintent = new Intent(ViewResult.this, home_activity.class);
+            Viewintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(Viewintent);
             finish();
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                backBtn.performClick();
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private void loadQuestion(ArrayList<QuestionModel> questionModels) {
         ResultAdapter resultAdapter = new ResultAdapter(questionModels);
         recyclerView.setAdapter(resultAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataList.clear();
     }
 }

@@ -3,6 +3,8 @@ package com.example.project;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,8 @@ public class RecentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView historyRV;
 
     public RecentFragment() {
         // Required empty public constructor
@@ -56,9 +60,17 @@ public class RecentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recent, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_recent, container, false);
+
+        historyRV = rootView.findViewById(R.id.historyRV);
+
+        historyRV.setHasFixedSize(true);
+        historyRV.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false));
+
+        HistoryAdapter historyAdapter = new HistoryAdapter(null,requireContext());
+        historyRV.setAdapter(historyAdapter);
+
+        return rootView;
     }
 }

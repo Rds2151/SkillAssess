@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class Result extends AppCompatActivity {
             int percentage = ((totalCorrectAns*100)/timerValue);
 
             resultDetail.setText("You attempted "+timerValue+" questions and got "+totalCorrectAns+" correct answers.");
+
             percentTextView.setText(percentage+"% Score");
             if (percentage > 60) {
                 header_title.setText("Congrats!");
@@ -73,13 +75,16 @@ public class Result extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Intent reintent = new Intent(Result.this, home_activity.class);
-                reintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(reintent);
-                finish();
+                cancel.performClick();
             }
         };
 
         getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataList.clear();
     }
 }
