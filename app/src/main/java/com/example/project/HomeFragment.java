@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.SearchView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -125,6 +127,10 @@ public class HomeFragment extends Fragment {
             recycleAdapter = new RecycleAdapter(courseModels);
             if (this.Course == null) {
                 recycleAdapter.setOnItemClickListener((courseId,courseName)  -> {
+                    if(checkUser()) {
+                        Toast.makeText(requireActivity(), "Complete your profile to unlock this functionality", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -139,6 +145,10 @@ public class HomeFragment extends Fragment {
                 });
             } else {
                 recycleAdapter.setOnItemClickListener((courseId,courseName) -> {
+                    if(checkUser()) {
+                        Toast.makeText(requireActivity(), "Complete your profile to unlock this functionality", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -155,5 +165,12 @@ public class HomeFragment extends Fragment {
             }
             courseRV.setAdapter(recycleAdapter);
         }
+    }
+
+    private boolean checkUser() {
+        if (home_activity.profileDetail.getFullName() == null || home_activity.profileDetail.getFullName().isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

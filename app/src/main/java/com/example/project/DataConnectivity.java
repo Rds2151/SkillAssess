@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -110,8 +112,8 @@ public class DataConnectivity {
     }
 
     protected CompletableFuture<String> resetPassword() {
-        if (this.email_addr.isEmpty()) {
-            return CompletableFuture.completedFuture("Email field is empty. Please provide a valid email address.");
+        if (email_addr.isEmpty()) {
+            return CompletableFuture.completedFuture("Please fill email address fields.");
         }
 
         CompletableFuture<String> forgetResult = new CompletableFuture<>();
@@ -130,4 +132,35 @@ public class DataConnectivity {
 
         return forgetResult;
     }
+
+    protected CompletableFuture<String> changePassword() {
+        if (passwd.isEmpty() || cpasswd.isEmpty()) {
+            return CompletableFuture.completedFuture("Please fill in both old password and new password fields");
+        }
+
+        CompletableFuture<String> result = new CompletableFuture<>();
+        executorService.execute(() -> mAuth.confirmPasswordReset(passwd, cpasswd).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                result.complete("Password changed successfully!");
+            } else {
+                Exception exception = task.getException();
+                if (exception instanceof FirebaseAuthInvalidUserException) {
+                    result.complete("Invalid user or user not found");
+                } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+                    result.complete("Invalid credentials or code");
+                } else {
+                    result.complete(exception.getMessage());
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Handle additional failure scenarios if needed
+            result.complete("Failed to change password: " + e.getMessage());
+        }));
+
+
+        return result;
+    }
+
+
+
 }

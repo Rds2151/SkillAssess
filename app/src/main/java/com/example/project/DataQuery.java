@@ -70,12 +70,12 @@ public class DataQuery {
                                         data.put("Full_name", Name);
                                         data.put("Birthdate", birthDate);
                                         data.put("Gender", Gender);
-                                        data.put("Total_Score", MainActivity.profileDetail.Total_Score);
+                                        data.put("Total_Score", home_activity.profileDetail.Total_Score);
 
                                         // Update the profile data in Firestore
                                         firestore.collection("profile").document(uid).set(data)
                                                 .addOnSuccessListener(aVoid -> {
-                                                    MainActivity.profileDetail.updateDetail(data);
+                                                    home_activity.profileDetail.updateDetail(data);
                                                     updateResult.complete("Profile updated successfully");
                                                 })
                                                 .addOnFailureListener(e -> {

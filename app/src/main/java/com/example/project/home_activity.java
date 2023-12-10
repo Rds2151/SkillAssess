@@ -16,6 +16,7 @@ public class home_activity extends AppCompatActivity {
     ImageView homebtn,recentbtn,settingbtn;
     String action = null;
 
+    protected final static profileDetail profileDetail = new profileDetail();
     int color;
 
     @Override

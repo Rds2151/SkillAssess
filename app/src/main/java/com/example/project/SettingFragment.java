@@ -36,16 +36,6 @@ public class SettingFragment extends Fragment {
 
         profileImg = rootView.findViewById(R.id.profileImg);
         profileTxt = rootView.findViewById(R.id.profiletxt);
-
-        Picasso.get()
-                .load(MainActivity.profileDetail.getprofileUri())
-                .error(R.drawable.usericon)
-                .into(profileImg);
-
-        if (MainActivity.profileDetail.getFullName() != null) {
-            profileTxt.setText(MainActivity.profileDetail.getFullName());
-        }
-
         btnSignOut = rootView.findViewById(R.id.btnSignOut);
         leaderBtn = rootView.findViewById(R.id.leaderBtn);
         historyBtn = rootView.findViewById(R.id.historyBtn);
@@ -53,6 +43,15 @@ public class SettingFragment extends Fragment {
         changePasswdBtn = rootView.findViewById(R.id.changePasswdBtn);
         privacyBtn = rootView.findViewById(R.id.privacyBtn);
         forwardBtn = rootView.findViewById(R.id.forwardBtn);
+
+        Picasso.get()
+                .load(home_activity.profileDetail.getprofileUri())
+                .error(R.drawable.usericon)
+                .into(profileImg);
+
+        if (home_activity.profileDetail.getFullName() != null) {
+            profileTxt.setText(home_activity.profileDetail.getFullName());
+        }
 
         btnSignOut.setOnClickListener(this::logout);
 
@@ -62,6 +61,8 @@ public class SettingFragment extends Fragment {
             startActivity(recent);
             requireActivity().finish();
         });
+
+        changePasswdBtn.setOnClickListener(v -> startActivity(new Intent(requireActivity(),ChangePassword.class)));
 
         forwardBtn.setOnClickListener(view -> editBtn.performClick());
 
@@ -93,12 +94,12 @@ public class SettingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Picasso.get()
-                .load(MainActivity.profileDetail.getprofileUri())
+                .load(home_activity.profileDetail.getprofileUri())
                 .error(R.drawable.usericon)
                 .into(profileImg);
 
-        if (MainActivity.profileDetail.getFullName() != null) {
-            profileTxt.setText(MainActivity.profileDetail.getFullName());
+        if (home_activity.profileDetail.getFullName() != null) {
+            profileTxt.setText(home_activity.profileDetail.getFullName());
         }
     }
 }

@@ -12,6 +12,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -67,7 +69,7 @@ public class profile_activity extends AppCompatActivity {
         String email = sharedPreferences.getString("email","");
         emailTxt.setText(email);
 
-        Map<String,Object> data = MainActivity.profileDetail.getData();
+        Map<String,Object> data = home_activity.profileDetail.getData();
         this.profileUri = (Uri)data.get("profileUri");
         firstName.setText((CharSequence) data.get("first_Name"));
         lastName.setText((CharSequence) data.get("last_Name"));
@@ -107,20 +109,32 @@ public class profile_activity extends AppCompatActivity {
             }
         });
 
-        firstName.setOnFocusChangeListener((view, hasFocus) -> {
-            TextView errorFname = findViewById(R.id.errorFn);
-            if(!hasFocus) {
-                if(validation(firstName,R.id.errorFn) == null) {
-                    errorFname.setText("");
-                }
+        firstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validation(firstName,R.id.errorFn);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validation(firstName,R.id.errorFn);
             }
         });
-        lastName.setOnFocusChangeListener((view, hasFocus) -> {
-            TextView errorLname = findViewById(R.id.errorLn);
-            if(!hasFocus) {
-                if(validation(lastName,R.id.errorLn) == null) {
-                    errorLname.setText("");
-                }
+        lastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validation(lastName,R.id.errorLn);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validation(lastName,R.id.errorLn);
             }
         });
 
