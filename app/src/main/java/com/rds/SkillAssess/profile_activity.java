@@ -1,4 +1,4 @@
-package com.example.project;
+package com.rds.SkillAssess;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

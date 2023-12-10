@@ -1,4 +1,4 @@
-package com.example.project;
+package com.rds.SkillAssess;
 
 import android.net.Uri;
 
@@ -95,7 +95,7 @@ public class DataQuery {
         return updateResult;
     }
 
-    protected void fetchDetails(com.example.project.DataQuery.DataCallback callback) {
+    protected void fetchDetails(DataQuery.DataCallback callback) {
         String uid = mAuth.getCurrentUser().getUid();
         StorageReference profileImageReference = storageReference.child("Profile_Images/" + uid);
 

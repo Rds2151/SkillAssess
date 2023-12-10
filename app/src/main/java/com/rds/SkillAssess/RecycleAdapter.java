@@ -1,4 +1,4 @@
-package com.example.project;
+package com.rds.SkillAssess;
 
 import android.view.LayoutInflater;
 import android.view.View;

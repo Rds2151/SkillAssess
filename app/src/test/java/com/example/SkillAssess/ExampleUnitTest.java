@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.SkillAssess;
 
 import org.junit.Test;
 
