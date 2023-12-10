@@ -72,37 +72,43 @@ public class RecentFragment extends Fragment {
 
         historyRV = rootView.findViewById(R.id.historyRV);
         dataNotFound = rootView.findViewById(R.id.datanotfound);
-
         historyRV.setHasFixedSize(true);
-        historyRV.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false));
 
-        new DataQuery().fetchData(new DataQuery.LoadQuizCallback() {
-            @Override
-            public void onQuizLoaded(List<Map<String, Object>> result) {
-                updateRecyclerView(result);
-            }
+        if (isAdded() && getContext() != null) {
+            historyRV.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false));
 
-            @Override
-            public void onQuizLoadedFailed(String error) {
-                dataNotFound.setVisibility(View.VISIBLE);
-                historyRV.setVisibility(View.GONE);
-            }
-        });
+            new DataQuery().fetchData(new DataQuery.LoadQuizCallback() {
+                @Override
+                public void onQuizLoaded(List<Map<String, Object>> result) {
+                    updateRecyclerView(result);
+                }
+
+                @Override
+                public void onQuizLoadedFailed(String error) {
+                    updateRecyclerView(null);
+                }
+            });
+        }
 
         return rootView;
     }
 
     private void updateRecyclerView(List<Map<String, Object>> resultModels) {
-        HistoryAdapter historyAdapter = new HistoryAdapter(resultModels,requireContext());
-        historyRV.setAdapter(historyAdapter);
-        historyAdapter.setOnItemClickListener(position -> {
-            ArrayList<QuestionModel> dataList;
-            dataList = (ArrayList<QuestionModel>) resultModels.get(position).get("Questions");
+        if (resultModels != null && isAdded()) {
+            HistoryAdapter historyAdapter = new HistoryAdapter(resultModels, requireContext());
+            historyRV.setAdapter(historyAdapter);
+            historyAdapter.setOnItemClickListener(position -> {
+                ArrayList<QuestionModel> dataList;
+                dataList = (ArrayList<QuestionModel>) resultModels.get(position).get("Questions");
 
-            Intent viewResultIntent = new Intent(requireActivity(),ViewResult.class);
-            viewResultIntent.putParcelableArrayListExtra("data",dataList);
-            viewResultIntent.putExtra("Fragment","Recent");
-            startActivity(viewResultIntent);
-        });
+                Intent viewResultIntent = new Intent(requireActivity(), ViewResult.class);
+                viewResultIntent.putParcelableArrayListExtra("data", dataList);
+                viewResultIntent.putExtra("Fragment", "Recent");
+                startActivity(viewResultIntent);
+            });
+        } else {
+            dataNotFound.setVisibility(View.VISIBLE);
+            historyRV.setVisibility(View.GONE);
+        }
     }
 }

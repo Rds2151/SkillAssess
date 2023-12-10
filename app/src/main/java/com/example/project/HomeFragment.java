@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import androidx.appcompat.widget.SearchView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -35,6 +36,8 @@ public class HomeFragment extends Fragment {
     private String Course = null;
     private RecyclerView courseRV;
     private FrameLayout dataNotFound;
+    private SearchView searchView;
+    private RecycleAdapter recycleAdapter;
     private ShimmerFrameLayout shimmerFrameLayout;
 
     public HomeFragment() {
@@ -79,6 +82,7 @@ public class HomeFragment extends Fragment {
         }
         courseRV = rootView.findViewById(R.id.courseRV);
         dataNotFound = rootView.findViewById(R.id.datanotfound);
+        searchView = rootView.findViewById(R.id.searchView);
         shimmerFrameLayout = rootView.findViewById(R.id.shimmerId);
         shimmerFrameLayout.startShimmer();
 
@@ -93,6 +97,19 @@ public class HomeFragment extends Fragment {
             dataQuery.loadCategories(this::updateRecyclerView);
         }
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recycleAdapter.filter(newText);
+                return false;
+            }
+        });
+
         return rootView;
     }
 
@@ -105,15 +122,15 @@ public class HomeFragment extends Fragment {
         }
         if(isAdded()) {
             courseRV.setVisibility(View.VISIBLE);
-            RecycleAdapter recycleAdapter = new RecycleAdapter(courseModels);
+            recycleAdapter = new RecycleAdapter(courseModels);
             if (this.Course == null) {
-                recycleAdapter.setOnItemClickListener(position -> {
+                recycleAdapter.setOnItemClickListener((courseId,courseName)  -> {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
 
                     HomeFragment homeFragment = new HomeFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString("Course_Name",courseModels.get(position).getCourse_id());
+                    bundle.putString("Course_Name",courseId);
                     homeFragment.setArguments(bundle);
 
                     transaction.replace(R.id.fragment,homeFragment);
@@ -121,14 +138,14 @@ public class HomeFragment extends Fragment {
                     transaction.commit();
                 });
             } else {
-                recycleAdapter.setOnItemClickListener(position -> {
+                recycleAdapter.setOnItemClickListener((courseId,courseName) -> {
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                     SetTimer setTimer = new SetTimer();
                     Bundle bundle = new Bundle();
-                    bundle.putString("Subject_Id",courseModels.get(position).getCourse_id());
-                    bundle.putString("subjectName",courseModels.get(position).getCourse_Name());
+                    bundle.putString("Subject_Id",courseId);
+                    bundle.putString("subjectName",courseName);
                     setTimer.setArguments(bundle);
 
                     fragmentTransaction.replace(R.id.fragment,setTimer);

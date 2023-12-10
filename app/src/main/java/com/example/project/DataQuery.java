@@ -330,6 +330,8 @@ public class DataQuery {
                     Collections.reverse(quizModels);
                     if (!quizModels.isEmpty()) {
                         loadQuizCallback.onQuizLoaded(quizModels);
+                    } else {
+                        loadQuizCallback.onQuizLoadedFailed("Zero data");
                     }
                 } else {
                     loadQuizCallback.onQuizLoadedFailed("Error: Data not found");

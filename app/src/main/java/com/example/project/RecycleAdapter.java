@@ -19,10 +19,12 @@ import java.util.ArrayList;
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHolder> {
 
     private final ArrayList<CourseModel> courseModels;
+    private final ArrayList<CourseModel> filteredModels;
     private OnItemClickListener onItemClickListener;
 
     public RecycleAdapter(ArrayList<CourseModel> courseModels) {
-        this.courseModels = courseModels;
+        this.courseModels = new ArrayList<>(courseModels);
+        this.filteredModels = new ArrayList<>(courseModels);
     }
 
     @NonNull
@@ -34,7 +36,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecycleAdapter.MyViewHolder holder, int position) {
-        CourseModel currentCourse = courseModels.get(position);
+        CourseModel currentCourse = filteredModels.get(position);
         holder.shimmerFrameLayout.stopShimmer();
 
         holder.courseName.setText(currentCourse.getCourse_Name());
@@ -51,20 +53,34 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
                     @Override
                     public void onError(Exception e) {}
                 });
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    int position = holder.getAdapterPosition();
-                    onItemClickListener.onItemClick(position);
-                }
+        holder.cardView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                int position1 = holder.getAdapterPosition();
+                String courseId = filteredModels.get(position1).getCourse_id();
+                String courseName = filteredModels.get(position1).getCourse_Name();
+                onItemClickListener.onItemClick(courseId,courseName);
             }
         });
     }
 
+    public void filter(String query) {
+        filteredModels.clear();
+
+        if(query.isEmpty()) {
+            filteredModels.addAll(courseModels);
+        } else {
+            for (CourseModel course : courseModels) {
+                if (course.getCourse_Name().toLowerCase().contains(query.toLowerCase())) {
+                    filteredModels.add(course);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
-        return courseModels.size();
+        return filteredModels.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +98,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.MyViewHo
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(String courseId,String courseName);
     }
 
     // Setter method for the item click listener
