@@ -42,10 +42,14 @@ public class ViewResult extends AppCompatActivity {
         loadQuestion(dataList);
 
         backBtn.setOnClickListener(v -> {
-            Intent Viewintent = new Intent(ViewResult.this, home_activity.class);
-            Viewintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(Viewintent);
-            finish();
+            if (action != null) {
+                finish();
+            } else {
+                Intent Viewintent = new Intent(ViewResult.this, home_activity.class);
+                Viewintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(Viewintent);
+                finish();
+            }
         });
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {

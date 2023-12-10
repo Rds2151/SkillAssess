@@ -65,7 +65,11 @@ public class home_activity extends AppCompatActivity {
         });
 
         // Start with the initial fragment and button color
-        homebtn.performClick();
+        if (action != null && action.equals("Recent")) {
+            recentbtn.performClick();
+        } else {
+            homebtn.performClick();
+        }
     }
 
     private void updateButtonColor(ImageView newSelectedButton) {

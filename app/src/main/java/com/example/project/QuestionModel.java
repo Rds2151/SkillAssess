@@ -19,8 +19,8 @@ public class QuestionModel implements Parcelable {
     List<String> Options;
 
     public QuestionModel(String question, String correctAnswer, List<String> options) {
-        this.question = question;
-        this.CorrectAnswer = correctAnswer;
+        this.question = question.trim();
+        this.CorrectAnswer = correctAnswer.trim();
         this.Options = options;
     }
 

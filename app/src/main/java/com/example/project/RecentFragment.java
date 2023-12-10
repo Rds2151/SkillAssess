@@ -85,7 +85,8 @@ public class RecentFragment extends Fragment {
 
             @Override
             public void onQuizLoadedFailed(String error) {
-                updateRecyclerView(null);
+                dataNotFound.setVisibility(View.VISIBLE);
+                historyRV.setVisibility(View.GONE);
             }
         });
 
@@ -93,11 +94,6 @@ public class RecentFragment extends Fragment {
     }
 
     private void updateRecyclerView(List<Map<String, Object>> resultModels) {
-        if ( resultModels.size() == 0) {
-            dataNotFound.setVisibility(View.VISIBLE);
-            historyRV.setVisibility(View.GONE);
-            return;
-        }
         HistoryAdapter historyAdapter = new HistoryAdapter(resultModels,requireContext());
         historyRV.setAdapter(historyAdapter);
         historyAdapter.setOnItemClickListener(position -> {

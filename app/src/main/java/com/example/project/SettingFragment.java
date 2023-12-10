@@ -57,19 +57,16 @@ public class SettingFragment extends Fragment {
 
         btnSignOut.setOnClickListener(this::logout);
 
-        forwardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(requireActivity(), profile_activity.class));
-            }
+        historyBtn.setOnClickListener(v -> {
+            Intent recent = new Intent(requireActivity(), home_activity.class);
+            recent.putExtra("Fragment","Recent");
+            startActivity(recent);
+            requireActivity().finish();
         });
 
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(requireActivity(), profile_activity.class));
-            }
-        });
+        forwardBtn.setOnClickListener(view -> editBtn.performClick());
+
+        editBtn.setOnClickListener(view -> startActivity(new Intent(requireActivity(), profile_activity.class)));
 
         return rootView;
     }
