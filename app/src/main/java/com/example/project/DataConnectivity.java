@@ -3,6 +3,14 @@ package com.example.project;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -43,6 +51,7 @@ public class DataConnectivity {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
+
                 mAuth.signInWithEmailAndPassword(email_addr, passwd).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Check if the user is authenticated and email is verified
@@ -56,7 +65,14 @@ public class DataConnectivity {
                                 editor.apply();
                                 result.complete("Login successful");
                             } else {
-                                result.complete("Please verify your email address before logging in.");
+                                user.sendEmailVerification()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            result.complete("Verification email resent. Please check your email.");
+                                        } else {
+                                            result.complete(task1.getException().getMessage());
+                                        }
+                                    });
                             }
                         }
                         else {
@@ -139,28 +155,22 @@ public class DataConnectivity {
         }
 
         CompletableFuture<String> result = new CompletableFuture<>();
-        executorService.execute(() -> mAuth.confirmPasswordReset(passwd, cpasswd).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                result.complete("Password changed successfully!");
+        FirebaseUser user = mAuth.getCurrentUser();
+        AuthCredential authCredential = EmailAuthProvider.getCredential(email_addr,passwd);
+        user.reauthenticate(authCredential).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                user.updatePassword(cpasswd).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        result.complete("Password changed successfully!");
+                    } else {
+                        result.complete(task1.getException().getMessage());
+                    }
+                });
             } else {
-                Exception exception = task.getException();
-                if (exception instanceof FirebaseAuthInvalidUserException) {
-                    result.complete("Invalid user or user not found");
-                } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                    result.complete("Invalid credentials or code");
-                } else {
-                    result.complete(exception.getMessage());
-                }
+                result.complete(task.getException().getMessage());
             }
-        }).addOnFailureListener(e -> {
-            // Handle additional failure scenarios if needed
-            result.complete("Failed to change password: " + e.getMessage());
-        }));
-
+        });
 
         return result;
     }
-
-
-
 }

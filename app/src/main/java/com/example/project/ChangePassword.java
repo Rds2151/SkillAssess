@@ -2,6 +2,8 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -53,7 +55,13 @@ public class ChangePassword extends AppCompatActivity {
             String cpasswd = cfPassword.getText().toString().trim();
 
             if (passwd.equals(cpasswd)) {
-                DataConnectivity dataConnectivity = new DataConnectivity(null, oldPasswd, passwd);
+                SharedPreferences sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+                String email = sharedPreferences.getString("email",null);
+                if (email == null || email.isEmpty()) {
+                    Toast.makeText(this, "Error: while fetching Email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                DataConnectivity dataConnectivity = new DataConnectivity(email, oldPasswd, passwd);
                 dataConnectivity.changePassword().thenAccept(result -> {
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.INVISIBLE);
