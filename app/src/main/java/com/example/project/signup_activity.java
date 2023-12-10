@@ -10,8 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.CompletableFuture;
-
 public class signup_activity extends AppCompatActivity {
     TextView btnLogin;
     Button btnSignUp;

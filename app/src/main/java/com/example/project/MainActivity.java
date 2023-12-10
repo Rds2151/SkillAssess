@@ -1,7 +1,6 @@
 package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
