@@ -6,18 +6,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 
 public class home_activity extends AppCompatActivity {
     ImageView homebtn,recentbtn,settingbtn;
+    String action = null;
 
     int color;
-    private Fragment currentFragment; // Track the currently selected fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,12 @@ public class home_activity extends AppCompatActivity {
         homebtn = findViewById(R.id.homeImg);
         recentbtn = findViewById(R.id.recentImg);
         settingbtn = findViewById(R.id.settingImg);
-        
+
+        Intent intent = getIntent();
+        if ( intent != null) {
+            action = intent.getStringExtra("Fragment");
+        }
+
         TypedValue typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.home_color, typedValue, true);
         color = typedValue.data;
@@ -58,9 +65,7 @@ public class home_activity extends AppCompatActivity {
         });
 
         // Start with the initial fragment and button color
-        currentFragment = new HomeFragment();
-        updateButtonColor(homebtn);
-        replaceFragment(currentFragment);
+        homebtn.performClick();
     }
 
     private void updateButtonColor(ImageView newSelectedButton) {
@@ -78,6 +83,5 @@ public class home_activity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);
         fragmentTransaction.commit();
-        currentFragment = fragment; // Update the current fragment
     }
 }

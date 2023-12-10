@@ -132,7 +132,6 @@ public class DataConnectivity {
         }
 
         CompletableFuture<String> forgetResult = new CompletableFuture<>();
-
         executorService.execute(new Runnable() {
             @Override
             public void run() {

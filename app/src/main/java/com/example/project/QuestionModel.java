@@ -24,6 +24,8 @@ public class QuestionModel implements Parcelable {
         this.Options = options;
     }
 
+    public QuestionModel() {}
+
     protected QuestionModel(Parcel in) {
         question = in.readString();
         CorrectAnswer = in.readString();
@@ -60,7 +62,7 @@ public class QuestionModel implements Parcelable {
     }
 
     public String getSelectedAnswer() {
-        return SelectedAnswer;
+        return   SelectedAnswer;
     }
 
     public boolean isAnswerCorrect() {

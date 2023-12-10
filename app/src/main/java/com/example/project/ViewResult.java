@@ -19,7 +19,6 @@ public class ViewResult extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageButton backBtn;
-    private int timeValue;
     private ArrayList<QuestionModel> dataList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +26,8 @@ public class ViewResult extends AppCompatActivity {
         setContentView(R.layout.activity_view_result);
 
         Intent intent = getIntent();
-        timeValue = intent.getIntExtra("timeValue",0);
         dataList = intent.getParcelableArrayListExtra("data");
+        String action = intent.getStringExtra("Fragment");
 
         if (dataList == null || dataList.isEmpty()) {
             finish();
@@ -52,21 +51,19 @@ public class ViewResult extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                backBtn.performClick();
+                dataList.clear();
+                if ( action == null) {
+                    backBtn.performClick();
+                } else {
+                    finish();
+                }
             }
         };
-
         getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private void loadQuestion(ArrayList<QuestionModel> questionModels) {
         ResultAdapter resultAdapter = new ResultAdapter(questionModels);
         recyclerView.setAdapter(resultAdapter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dataList.clear();
     }
 }

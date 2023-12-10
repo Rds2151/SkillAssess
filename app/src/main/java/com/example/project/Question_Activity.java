@@ -30,6 +30,7 @@ public class Question_Activity extends AppCompatActivity {
     private TextView questionNo, questionText, timeTxt;
     private ArrayList<QuestionModel> dataList = null;
     private String selectedOptions = null;
+    private String subjectName = null;
     private int timerValue;
     private int initialTimeSeconds;
     private int currentQuestion = 0;
@@ -79,7 +80,7 @@ public class Question_Activity extends AppCompatActivity {
         if (intent != null) {
             timerValue = intent.getIntExtra("Timer", 0);
             dataList = intent.getParcelableArrayListExtra("Subject_Data");
-
+            this.subjectName = intent.getStringExtra("Subject_Name");
             if (timerValue == 0 || dataList == null) {
                 Toast.makeText(this, "Error: Timer or Subject Data not found", Toast.LENGTH_SHORT).show();
                 finish();
@@ -201,7 +202,7 @@ public class Question_Activity extends AppCompatActivity {
         }
 
         DataQuery dq = new DataQuery();
-        dq.submitData(data,Total_Correct, new DataQuery.SubmitDataCallback() {
+        dq.submitData(data,Total_Correct,this.subjectName, new DataQuery.SubmitDataCallback() {
             @Override
             public void onSubmitData() {
                 Intent resultIntent = new Intent(getApplicationContext(), Result.class);

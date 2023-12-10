@@ -132,6 +132,7 @@ public class HomeFragment extends Fragment {
                     SetTimer setTimer = new SetTimer();
                     Bundle bundle = new Bundle();
                     bundle.putString("Subject_Id",courseModels.get(position).getCourse_id());
+                    bundle.putString("subjectName",courseModels.get(position).getCourse_Name());
                     setTimer.setArguments(bundle);
 
                     fragmentTransaction.replace(R.id.fragment,setTimer);

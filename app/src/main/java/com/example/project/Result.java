@@ -4,6 +4,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,16 +20,16 @@ public class Result extends AppCompatActivity {
     TextView percentTextView, resultDetail, header_title;
     Button viewResultBtn;
     ImageView cancel;
-    private int timerValue;
     private ArrayList<QuestionModel> dataList;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
         Intent intent = getIntent();
-        timerValue = intent.getIntExtra("timeValue",0);
+        int timerValue = intent.getIntExtra("timeValue", 0);
         dataList = intent.getParcelableArrayListExtra("data");
 
         percentTextView = findViewById(R.id.percent);
@@ -45,9 +46,9 @@ public class Result extends AppCompatActivity {
         }
 
         if (totalCorrectAns != 0) {
-            int percentage = ((totalCorrectAns*100)/timerValue);
+            int percentage = ((totalCorrectAns*100)/ timerValue);
 
-            resultDetail.setText("You attempted "+timerValue+" questions and got "+totalCorrectAns+" correct answers.");
+            resultDetail.setText("You attempted "+ timerValue +" questions and got "+totalCorrectAns+" correct answers.");
 
             percentTextView.setText(percentage+"% Score");
             if (percentage > 60) {
@@ -67,7 +68,6 @@ public class Result extends AppCompatActivity {
         viewResultBtn.setOnClickListener(v -> {
             Intent viewResultIntent = new Intent(Result.this,ViewResult.class);
             viewResultIntent.putParcelableArrayListExtra("data",dataList);
-            viewResultIntent.putExtra("timeValue",timerValue);
             startActivity(viewResultIntent);
             finish();
         });

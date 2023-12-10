@@ -34,6 +34,7 @@ public class SetTimer extends Fragment {
     private int selectedTimer = -1;
 
     private String Subject_Id;
+    private String subjectName;
 
     private Button btn15 , btn30 , btn60;
     public SetTimer() {
@@ -78,6 +79,8 @@ public class SetTimer extends Fragment {
             getParentFragmentManager().popBackStack();
         }
         this.Subject_Id = args.getString("Subject_Id");
+        this.subjectName = args.getString("subjectName");
+
 
         btn15 = rootView.findViewById(R.id.Btn15);
         btn30 = rootView.findViewById(R.id.Btn30);
@@ -112,12 +115,13 @@ public class SetTimer extends Fragment {
                         Intent startTest = new Intent(requireActivity(), Question_Activity.class);
                         startTest.putParcelableArrayListExtra("Subject_Data",questionModels);
                         startTest.putExtra("Timer",selectedTimer);
+                        startTest.putExtra("Subject_Name",subjectName);
                         startActivity(startTest);
                         requireActivity().getSupportFragmentManager().beginTransaction().remove(SetTimer.this).commit();
                     }
 
                     @Override
-                    public void onQuestionLoadedFailed() {
+                    public void onQuestionLoadedFailed(String error) {
                         Toast.makeText(requireActivity().getApplicationContext(), "Error: Data not found", Toast.LENGTH_SHORT).show();
                     }
                 });

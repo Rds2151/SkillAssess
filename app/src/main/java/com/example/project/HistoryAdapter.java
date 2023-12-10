@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +14,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder> {
 
-    private final ArrayList<QuestionModel> questionModels;
+    private final ArrayList<QuestionModel> questionModels = new ArrayList<>();
+    private final List<Map<String, Object>> dataList;
     private final Context context;
-    private int timeValue;
+    private OnItemClickListener onItemClickListener;
 
-    public HistoryAdapter(ArrayList<QuestionModel> questionModels,Context context){
-        this.questionModels = questionModels;
-        this.timeValue = 9;
+    public HistoryAdapter(List<Map<String, Object>> dataList,Context context){
+        this.dataList = dataList;
         this.context = context;
     }
     @NonNull
@@ -34,21 +37,31 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.MyViewHolder holder, int position) {
-        holder.quizMarks.setText("");
-        holder.quizTitle.setText("");
-        holder.quizDate.setText("");
+        Map<String,Object> singleQuiz = dataList.get(position);
+        int questionSize = (int) singleQuiz.get("Question_Size");
 
-        holder.historyCard.setOnClickListener(v -> {
-            Intent viewResultIntent = new Intent(context,ViewResult.class);
-            viewResultIntent.putParcelableArrayListExtra("data",questionModels);
-            viewResultIntent.putExtra("timeValue",timeValue);
-            context.startActivity(viewResultIntent);
+        String subjectName = singleQuiz.get("Subject_Name")+" Programming";
+        String submissionDate = ""+singleQuiz.get("Submission_Date");
+        String total = singleQuiz.get("Total_Correct")+"/"+questionSize;
+
+        holder.quizMarks.setText(total);
+        holder.quizTitle.setText(subjectName);
+        holder.quizDate.setText(submissionDate);
+
+        holder.historyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onItemClickListener != null) {
+                    int position = holder.getAdapterPosition();
+                    onItemClickListener.onItemClick(position);
+                }
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return questionModels.size();
+        return dataList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,5 +75,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             quizMarks = itemView.findViewById(R.id.totalMarksTextView);
             historyCard = itemView.findViewById(R.id.historyCard);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    // Setter method for the item click listener
+    public void setOnItemClickListener(HistoryAdapter.OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 }

@@ -1,14 +1,21 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +33,7 @@ public class RecentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    FrameLayout dataNotFound;
     private RecyclerView historyRV;
 
     public RecentFragment() {
@@ -64,13 +72,42 @@ public class RecentFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_recent, container, false);
 
         historyRV = rootView.findViewById(R.id.historyRV);
+        dataNotFound = rootView.findViewById(R.id.datanotfound);
 
         historyRV.setHasFixedSize(true);
         historyRV.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false));
 
-        HistoryAdapter historyAdapter = new HistoryAdapter(null,requireContext());
-        historyRV.setAdapter(historyAdapter);
+        new DataQuery().fetchData(new DataQuery.LoadQuizCallback() {
+            @Override
+            public void onQuizLoaded(List<Map<String, Object>> result) {
+                updateRecyclerView(result);
+            }
+
+            @Override
+            public void onQuizLoadedFailed(String error) {
+                updateRecyclerView(null);
+            }
+        });
 
         return rootView;
+    }
+
+    private void updateRecyclerView(List<Map<String, Object>> resultModels) {
+        if ( resultModels.size() == 0) {
+            dataNotFound.setVisibility(View.VISIBLE);
+            historyRV.setVisibility(View.GONE);
+            return;
+        }
+        HistoryAdapter historyAdapter = new HistoryAdapter(resultModels,requireContext());
+        historyRV.setAdapter(historyAdapter);
+        historyAdapter.setOnItemClickListener(position -> {
+            ArrayList<QuestionModel> dataList;
+            dataList = (ArrayList<QuestionModel>) resultModels.get(position).get("Questions");
+
+            Intent viewResultIntent = new Intent(requireActivity(),ViewResult.class);
+            viewResultIntent.putParcelableArrayListExtra("data",dataList);
+            viewResultIntent.putExtra("Fragment","Recent");
+            startActivity(viewResultIntent);
+        });
     }
 }

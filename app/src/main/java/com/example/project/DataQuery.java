@@ -1,13 +1,10 @@
 package com.example.project;
 
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,7 +12,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -23,14 +20,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,10 +37,10 @@ import java.util.concurrent.Executors;
 
 public class DataQuery {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private FirebaseFirestore firestore;
-    private FirebaseDatabase database;
-    private FirebaseAuth mAuth;
-    private StorageReference storageReference;
+    private final FirebaseFirestore firestore;
+    private final FirebaseDatabase database;
+    private final FirebaseAuth mAuth;
+    private final StorageReference storageReference;
     public ArrayList<CourseModel> courseModels = new ArrayList<>();
 
     public DataQuery() {
@@ -207,28 +201,32 @@ public class DataQuery {
                         int questionsToFetch = Math.min(size,dataList.size());
                         ArrayList<QuestionModel> randomQuestions = new ArrayList<>(dataList.subList(0,questionsToFetch));
                         if ( randomQuestions.isEmpty()) {
-                            loadQuestionCallback.onQuestionLoadedFailed();
+                            loadQuestionCallback.onQuestionLoadedFailed("No Data Found");
                             return;
                         }
                         loadQuestionCallback.onQuestionLoaded(randomQuestions);
                     })
-                    .addOnFailureListener(e -> loadQuestionCallback.onQuestionLoadedFailed());
+                    .addOnFailureListener(e -> loadQuestionCallback.onQuestionLoadedFailed(e.getMessage()));
         });
     }
 
     public interface LoadQuestionCallback {
         public void onQuestionLoaded(ArrayList<QuestionModel> questionModels);
-        public void onQuestionLoadedFailed();
+        public void onQuestionLoadedFailed(String error);
     }
 
-    public interface SubmitDataCallback {
-        public void onSubmitData();
-        public void onSubmitDataFailed(String errror);
-    }
-
-    protected void submitData(List<Map<String, Object>> dataList,int Total_Correct,SubmitDataCallback submitDataCallback) {
+    protected void submitData(List<Map<String, Object>> dataList,int Total_Correct,String subjectName,SubmitDataCallback submitDataCallback) {
         String uid = mAuth.getCurrentUser().getUid();
         DatabaseReference databaseReference = database.getReference("QuizHistory").child(uid);
+        long currentTimeMillis = System.currentTimeMillis();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
+        String formattedDate = sdf.format(new Date(currentTimeMillis));
+
+        Map<String, Object> quizData = new HashMap<>();
+        quizData.put("Total_Correct", Total_Correct);
+        quizData.put("Subject_Name", subjectName);
+        quizData.put("Submission_Date", formattedDate);
 
         executorService.execute(() -> {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -236,15 +234,6 @@ public class DataQuery {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     long numberOfQuiz = snapshot.getChildrenCount();
                     DatabaseReference quizReference = databaseReference.child("Quiz"+(++numberOfQuiz));
-
-                    long currentTimeMillis = System.currentTimeMillis();
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
-                    String formattedDate = sdf.format(new Date(currentTimeMillis));
-
-                    Map<String, Object> quizData = new HashMap<>();
-                    quizData.put("Total_Correct", Total_Correct);
-                    quizData.put("formattedDate", formattedDate);
 
                     for (int i = 0; i < dataList.size(); i++) {
                         quizData.put("Question" + (i + 1), dataList.get(i));
@@ -276,6 +265,11 @@ public class DataQuery {
         });
     }
 
+    public interface SubmitDataCallback {
+        public void onSubmitData();
+        public void onSubmitDataFailed(String errror);
+    }
+
     private void updateScore(int Score,SubmitDataCallback submitDataCallback) {
         String uid = mAuth.getCurrentUser().getUid();
         executorService.execute(() -> {
@@ -289,36 +283,80 @@ public class DataQuery {
         });
     }
 
-    protected void fetchData(List<Map<String, Object>> dataList,int Total_Correct,SubmitDataCallback submitDataCallback) {
+    protected void fetchData(LoadQuizCallback loadQuizCallback ) {
         String uid = mAuth.getCurrentUser().getUid();
         DatabaseReference databaseReference = database.getReference("QuizHistory").child(uid);
+        List<Map<String,Object>> quizModels = new ArrayList<>();
 
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = databaseReference.limitToFirst(29);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long numberOfQuiz = snapshot.getChildrenCount();
-                DatabaseReference quizReference = databaseReference.child("Quiz"+(++numberOfQuiz));
+                if (snapshot.exists()) {
+                    // Iterate through each Quiz entry
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        ArrayList<QuestionModel> dataList = new ArrayList<>();
+                        Map<String,Object> eachQuiz = new HashMap<>();
+                        int size = 0;
 
-                Map<String, Object> quizData = new HashMap<>();
-                quizData.put("Total_Correct", Total_Correct);
+                        // Retrieve data from each Quiz
+                        eachQuiz.put("Total_Correct",dataSnapshot.child("Total_Correct").getValue(Integer.class));
+                        eachQuiz.put("Subject_Name",dataSnapshot.child("Subject_Name").getValue(String.class));
+                        eachQuiz.put("Submission_Date",dataSnapshot.child("Submission_Date").getValue(String.class));
 
-                for (int i = 0; i < dataList.size(); i++) {
-                    quizData.put("Question" + (i + 1), dataList.get(i));
-                }
+                        // Iterate through each Question entry
+                        for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
+                            if(questionSnapshot.getKey() != null && questionSnapshot.getKey().startsWith("Question")) {
+                                QuestionModel questionModel = new QuestionModel();
+                                size++;
 
-                quizReference.setValue(quizData).addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
-                        submitDataCallback.onSubmitData();
-                    } else {
-                        submitDataCallback.onSubmitDataFailed(task.getException().getMessage());
+                                questionModel.setQuestion(questionSnapshot.child("Text").getValue(String.class));
+                                questionModel.setCorrectAnswer(questionSnapshot.child("CorrectAnswer").getValue(String.class));
+                                questionModel.setSelectedAnswer(questionSnapshot.child("SelectedAnswer").getValue(String.class));
+
+                                List<String> options = new ArrayList<>();
+                                for (DataSnapshot optionSnapshot : questionSnapshot.child("Options").getChildren()) {
+                                    String option = optionSnapshot.getValue(String.class);
+                                    options.add(option);
+                                }
+                                questionModel.setOptions(options);
+                                dataList.add(questionModel);
+                            }
+                        }
+                        eachQuiz.put("Question_Size",size);
+                        eachQuiz.put("Questions",dataList);
+                        quizModels.add(eachQuiz);
                     }
-                });
+                    Collections.reverse(quizModels);
+                    if (!quizModels.isEmpty()) {
+                        loadQuizCallback.onQuizLoaded(quizModels);
+                    }
+                } else {
+                    loadQuizCallback.onQuizLoadedFailed("Error: Data not found");
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                submitDataCallback.onSubmitDataFailed(error.getMessage());
+                loadQuizCallback.onQuizLoadedFailed("Error fetching data: "+error.getMessage());
             }
         });
+    }
+
+    public interface LoadQuizCallback {
+        public void onQuizLoaded(List<Map<String,Object>> result);
+        public void onQuizLoadedFailed(String error);
+    }
+
+    private String formatDate(Long timestamp) {
+        if (timestamp != null) {
+            // Convert the timestamp to a Date object
+            Date date = new Date(timestamp);
+
+            // Format the Date object to a desired string format
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            return sdf.format(date);
+        } else {
+            return "N/A"; // Handle null case or return a default value
+        }
     }
 }
