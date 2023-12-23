@@ -4,7 +4,7 @@ SkillAssess is an Android application designed to assist users in preparing for 
 
 ## Glimpses of the Project
 
-[[![Watch the video](https://example.com/thumbnail.jpg)](https://github.com/Rds2151/SkillAssess/assets/69039616/27d1f846-f2da-467d-82f5-81a43e317bcb)](https://github.com/Rds2151/SkillAssess/issues/1#issue-2054865639)
+(https://github.com/Rds2151/SkillAssess/assets/69039616/27d1f846-f2da-467d-82f5-81a43e317bcb)](https://github.com/Rds2151/SkillAssess/issues/1#issue-2054865639)
 
 ## Features
 
