@@ -44,3 +44,10 @@ To run the SkillAssess project locally, follow these steps:
 1. Clone the repository:
    ```bash
    git clone https://github.com/Rds2151/SkillAssess.git
+   ```
+2. Open the project in Android Studio.
+
+3. Configure Firebase:
+   - Create a new Firebase project.
+   - Add your google-services.json file to the app directory.
+   - Build and run the application on an Android emulator or device.
