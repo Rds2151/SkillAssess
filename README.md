@@ -2,7 +2,7 @@
 
 SkillAssess is an Android application designed to assist users in preparing for interviews by providing a comprehensive platform for quiz-based learning. This repository contains the source code and documentation for the SkillAssess project.
 
-## Glimpses of the Project
+## Glimpses of SkillAssess
 https://github.com/Rds2151/SkillAssess/assets/69039616/bf150474-632f-4221-bbfd-cf3dc328e246
 
 ## Features
