@@ -1,0 +1,342 @@
+[
+    {
+        "CorrectAnswer": "int arr[10];",
+        "Options": [
+            "int arr[10];",
+            "array arr[10];",
+            "int arr{};",
+            "int arr();"
+        ],
+        "Text": "What is the syntax for declaring an array in C?"
+    },
+    {
+        "Text": "Which keyword is used to prevent any changes in the variable within a C program?",
+        "Options": ["immutable", "mutable", "const", "volatile"],
+        "CorrectAnswer": "const"
+    },
+    {
+        "Text": "What is the result of logical or relational expression in C?",
+        "Options": [
+            "True or False",
+            "0 or 1",
+            "0 if an expression is false and any positive number if an expression is true",
+            "None of the mentioned"
+        ],
+        "CorrectAnswer": "0 or 1"
+    },
+    {
+        "CorrectAnswer": "Widening & Narrowing conversions",
+        "Text": "Which of the following typecasting is accepted by C language?",
+        "Options": [
+            "Widening conversions",
+            "Narrowing conversions",
+            "Widening & Narrowing conversions",
+            "None of the mentioned"
+        ]
+    },
+    {
+        "CorrectAnswer": "None of the mentioned",
+        "Text": "Where in C the order of precedence of operators do not exist?",
+        "Options": [
+            "Within conditional statements, if, else",
+            "Within while, do-while",
+            "Within a macro definition",
+            "None of the mentioned"
+        ]
+    },
+    {
+        "Options": [
+            "Different precedence, same associativity",
+            "Different precedence, different associativity",
+            "Same precedence, different associativity",
+            "All of the mentioned"
+        ],
+        "Text": "Which of the following is NOT possible with any 2 operators in C?",
+        "CorrectAnswer": "Same precedence, different associativity"
+    },
+    {
+        "CorrectAnswer": "all of the mentioned",
+        "Text": "What is an example of iteration in C?",
+        "Options": ["for", "while", "do-while", "all of the mentioned"]
+    },
+    {
+        "Text": "Functions can return enumeration constants in C?",
+        "Options": [
+            "true",
+            "false",
+            "depends on the compiler",
+            "depends on the standard"
+        ],
+        "CorrectAnswer": "true"
+    },
+    {
+        "Text": "Functions in C Language are always _________",
+        "Options": [
+            "Internal",
+            "External",
+            "Both Internal and External",
+            "External and Internal are not valid terms for functions"
+        ],
+        "CorrectAnswer": "External"
+    },
+    {
+        "Text": "Which of following is not accepted in C?",
+        "CorrectAnswer": "all of the mentioned",
+        "Options": [
+            "static a = 10;",
+            "static int func (int);",
+            "static static int a;",
+            "all of the mentioned"
+        ]
+    },
+    {
+        "CorrectAnswer": "Conditional compilation",
+        "Text": "Property which allows producing different executables for different platforms in C is called?",
+        "Options": [
+            "File inclusion",
+            "Selective inclusion",
+            "Conditional compilation",
+            "Recursive macros"
+        ]
+    },
+    {
+        "Text": "Who is the father of C language?",
+        "Options": [
+            "Steve Jobs",
+            "James Gosling",
+            "Dennis Ritchie",
+            "Rasmus Lerdorf"
+        ],
+        "CorrectAnswer": "Dennis Ritchie"
+    },
+    {
+        "Text": "What is #include <stdio.h>?",
+        "CorrectAnswer": "Preprocessor directive",
+        "Options": [
+            "Preprocessor directive",
+            "Inclusion directive",
+            "File inclusion directive",
+            "None of the mentioned"
+        ]
+    },
+    {
+        "Text": "C preprocessors can have compiler-specific features.",
+        "Options": [
+            "True",
+            "False",
+            "Depends on the standard",
+            "Depends on the platform"
+        ],
+        "CorrectAnswer": "True"
+    },
+    {
+        "Options": ["#ifdef", "#define", "#endif", "all of the mentioned"],
+        "CorrectAnswer": "all of the mentioned",
+        "Text": "Which of the following are C preprocessors?"
+    },
+    {
+        "Options": ["#", "$", "\".\"", "&"],
+        "CorrectAnswer": "#",
+        "Text": "The C-preprocessors are specified with _________ symbol."
+    },
+    {
+        "Options": [
+            "When former is used, current directory is searched and when latter is used, standard directory is searched",
+            "When former is used, standard directory is searched and when latter is used, current directory is searched",
+            "When former is used, search is done in an implementation-defined manner and when latter is used, the current directory is searched",
+            "For both, the search for 'somelibrary' is done in implementation-defined places"
+        ],
+        "CorrectAnswer": "When former is used, standard directory is searched and when latter is used, current directory is searched",
+        "Text": "How is search done in #include and #include “somelibrary.h” according to C standard?"
+    },
+    {
+        "Options": ["7", "127", "255", "No limits"],
+        "Text": "How many numbers of pointer (*) does C have against a pointer variable declaration?",
+        "CorrectAnswer": "No limits"
+    },
+    {
+        "CorrectAnswer": "Jagged Array",
+        "Text": "Which of the following is not possible statically in the C language?",
+        "Options": [
+            "Jagged Array",
+            "Rectangular Array",
+            "Cuboidal Array",
+            "Multidimensional Array"
+        ]
+    },
+    {
+        "Options": ["char *", "struct", "void", "none of the mentioned"],
+        "Text": "Which of the following return-types cannot be used for a function in C?",
+        "CorrectAnswer": "none of the mentioned"
+    },
+    {
+        "CorrectAnswer": "stdarg.h",
+        "Options": ["<stdio.h>", "<stdlib.h>", "<math.h>", "<stdarg.h>"],
+        "Text": "The standard header _______ is used for variable list arguments (...) in C."
+    },
+    {
+        "Options": [
+            "Standard input",
+            "Standard output",
+            "Standard error",
+            "All of the mentioned"
+        ],
+        "CorrectAnswer": "All of the mentioned",
+        "Text": "When a C program is started, O.S environment is responsible for opening the file and providing a pointer for that file?"
+    },
+    {
+        "CorrectAnswer": "int $main;",
+        "Options": [
+            "int number;",
+            "float rate;",
+            "int variable_count;",
+            "int $main;"
+        ],
+        "Text": "Which of the following is not a valid C variable name?"
+    },
+    {
+        "CorrectAnswer": "struct",
+        "Options": ["int", "char *", "struct", "None of the mentioned"],
+        "Text": "In C language, FILE is of which data type?"
+    },
+    {
+        "Text": "What is the sizeof(char) in a 32-bit C compiler?",
+        "Options": ["1 bit", "2 bits", "1 Byte", "2 Bytes"],
+        "CorrectAnswer": "1 Byte"
+    },
+    {
+        "Text": "Which of the following is not an operator in C?",
+        "Options": [",", "sizeof()", "~", "None of the mentioned"],
+        "CorrectAnswer": "None of the mentioned"
+    },
+    {
+        "CorrectAnswer": "stdio.h",
+        "Options": ["stdlib.h", "ctype.h", "stdio.h", "stdarg.h"],
+        "Text": "scanf() is a predefined function in______header file."
+    },
+    {
+        "CorrectAnswer": "int a[][] = {{1, 2, 3}, {2, 3, 4, 5}};",
+        "Options": [
+            "int a[][] = {{1, 2, 3}, {2, 3, 4, 5}};",
+            "int *a[] = {{1, 2, 3}, {2, 3, 4, 5}};",
+            "int a[4][4] = {{1, 2, 3}, {2, 3, 4, 5}};",
+            "none of the mentioned"
+        ],
+        "Text": "Which of the following declaration are illegal?"
+    },
+    {
+        "CorrectAnswer": "False",
+        "Text": "Register keyword mandates compiler to place it in machine register.",
+        "Options": [
+            "True",
+            "False",
+            "Depends on the standard",
+            "Depends on the platform"
+        ]
+    },
+    {
+        "Options": [
+            "True",
+            "False",
+            "Depends on the compiler",
+            "Depends on the standard"
+        ],
+        "CorrectAnswer": "False",
+        "Text": "Register storage class can be specified to global variables."
+    },
+    {
+        "Text": "When compiler accepts the request to use the variable as a register?",
+        "Options": [
+            "It is stored in CPU",
+            "It is stored in cache memory",
+            "It is stored in main memory",
+            "It is stored in secondary memory"
+        ],
+        "CorrectAnswer": "It is stored in CPU"
+    },
+    {
+        "Options": ["int", "long", "float", "all of the mentioned"],
+        "CorrectAnswer": "all of the mentioned",
+        "Text": "Which data type can be stored in register?"
+    },
+    {
+        "Text": "Which of the following operation is not possible in a register variable?",
+        "CorrectAnswer": "All of the mentioned",
+        "Options": [
+            "Reading the value into a register variable",
+            "Copy the value from a memory variable",
+            "Global declaration of register variable",
+            "All of the mentioned"
+        ]
+    },
+    {
+        "Options": [
+            "LowerCase letters",
+            "UpperCase letters",
+            "CamelCase letters",
+            "None of the mentioned"
+        ],
+        "Text": "All keywords in C are in ____________",
+        "CorrectAnswer": "LowerCase letters"
+    },
+    {
+        "Text": "Which among the following is the correct syntax to declare a static variable register?",
+        "CorrectAnswer": "We cannot use static and register together",
+        "Options": [
+            "static register a;",
+            "register static a;",
+            "Both static register a; and register static a;",
+            "We cannot use static and register together"
+        ]
+    },
+    {
+        "CorrectAnswer": "registers",
+        "Options": ["stack", "registers", "heap", "main memory"],
+        "Text": "Register variables reside in ________"
+    },
+    {
+        "Options": [
+            "They can contain alphanumeric characters as well as special characters",
+            "It is not an error to declare a variable to be one of the keywords(like goto, static)",
+            "Variable names cannot start with a digit",
+            "Variable can be of any length"
+        ],
+        "Text": "Which of the following is true for variable names in C?",
+        "CorrectAnswer": "Variable names cannot start with a digit"
+    },
+    {
+        "Text": "Which is valid C expression?",
+        "Options": [
+            "int my_num = 100,000;",
+            "int my_num = 100000;",
+            "int my num = 1000;",
+            "int $my_num = 10000;"
+        ],
+        "CorrectAnswer": "int my_num = 100000;"
+    },
+    {
+        "Options": ["volatile", "true", "friend", "export"],
+        "Text": "Which of the following cannot be a variable name in C?",
+        "CorrectAnswer": "volatile"
+    },
+    {
+        "Text": "What is short int in C programming?",
+        "Options": [
+            "The basic data type of C",
+            "Qualifier",
+            "Short is the qualifier and int is the basic data type",
+            "All of the mentioned"
+        ],
+        "CorrectAnswer": "Short is the qualifier and int is the basic data type"
+    },
+    {
+        "CorrectAnswer": "String str;",
+        "Options": [
+            "String str;",
+            "char *str;",
+            "float str = 3e2;",
+            "Both \"String str;\" and \"float str = 3e2;\""
+        ],
+        "Text": "Which of the following declaration is not supported by C language?"
+    }
+]

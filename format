@@ -1,0 +1,45 @@
+Format:
+
+[
+    {
+      "subject" : ""
+    },
+    {
+      "Text": "",
+      "CorrectAnswer": "",
+      "Options": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+]
+
+For Example:
+
+[
+    {
+      "subject" : "cprogramming"
+    },
+    {
+      "Text": "Who is the father of C language?",
+      "CorrectAnswer": "Dennis Ritchie",
+      "Options": [
+        "Steve Jobs",
+        "James Gosling",
+        "Dennis Ritchie",
+        "Rasmus Lerdorf"
+      ]
+    },
+    {
+      "Text": "Who is the father of C language?",
+      "CorrectAnswer": "Dennis Ritchie",
+      "Options": [
+        "Steve Jobs",
+        "James Gosling",
+        "Dennis Ritchie",
+        "Rasmus Lerdorf"
+      ]
+    }
+]

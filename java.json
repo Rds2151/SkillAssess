@@ -1,0 +1,722 @@
+[
+  {
+    "Text": "Which of the following option leads to the portability and security of Java?",
+    "CorrectAnswer": "Bytecode is executed by JVM",
+    "Options": [
+      "Bytecode is executed by JVM",
+      "The applet makes the Java code secure and portable",
+      "Use of exception handling",
+      "Dynamic binding between objects"
+    ]
+  },
+  {
+    "Options": [
+      "Runnable Interface",
+      "Marker Interface",
+      "Abstract Interface",
+      "CharSequence Interface"
+    ],
+    "CorrectAnswer": "Marker Interface",
+    "Text": "An interface with no fields or methods is known as a ______."
+  },
+  {
+    "CorrectAnswer": "Applet class",
+    "Options": [
+      "Applet class",
+      "Window class",
+      "Frame class",
+      "Dialog class"
+    ],
+    "Text": "Which of the following is an immediate subclass of the Panel class?"
+  },
+  {
+    "Options": [
+      "Dynamic",
+      "Architecture Neutral",
+      "Use of pointers",
+      "Object-oriented"
+    ],
+    "CorrectAnswer": "Use of pointers",
+    "Text": "Which of the following is not a Java features?"
+  },
+  {
+    "Options": [
+      "A final method cannot be overridden in its subclasses.",
+      "A final class cannot be extended.",
+      "A final class cannot extend other classes.",
+      "A final method can be inherited."
+    ],
+    "CorrectAnswer": "A final class cannot extend other classes.",
+    "Text": "Which option is false about the final keyword?"
+  },
+  {
+    "Options": [
+      "RuntimeException and Error class",
+      "Exception and VirtualMachineError class",
+      "Error and Exception class",
+      "IOException and VirtualMachineError class"
+    ],
+    "Text": "Which of these classes are the direct subclasses of the Throwable class?",
+    "CorrectAnswer": "Error and Exception class"
+  },
+  {
+    "CorrectAnswer": "An exception caused by other exceptions.",
+    "Text": "What do you mean by chained exceptions in Java?",
+    "Options": [
+      "Exceptions occurred by the VirtualMachineError",
+      "An exception caused by other exceptions",
+      "Exceptions occur in chains with discarding the debugging information",
+      "None of the above"
+    ]
+  },
+  {
+    "CorrectAnswer": "Heap memory",
+    "Options": [
+      "Stack",
+      "String memory",
+      "Heap memory",
+      "Random storage space"
+    ],
+    "Text": "In which memory a String is stored, when we create a string using new operator?"
+  },
+  {
+    "CorrectAnswer": "It returns the existing string from memory",
+    "Text": "What is the use of the intern() method?",
+    "Options": [
+      "It returns the existing string from memory",
+      "It creates a new string in the database",
+      "It modifies the existing string in the database",
+      "None of the above"
+    ]
+  },
+  {
+    "CorrectAnswer": "Remote interface",
+    "Text": "Which of the following is a marker interface?",
+    "Options": [
+      "Runnable interface",
+      "Remote interface",
+      "Readable interface",
+      "Result interface"
+    ]
+  },
+  {
+    "Options": [
+      "object",
+      "strictfp",
+      "main",
+      "system"
+    ],
+    "CorrectAnswer": "strictfp",
+    "Text": "Which of the following is a reserved keyword in Java?"
+  },
+  {
+    "CorrectAnswer": "Javadoc tool",
+    "Options": [
+      "javap tool",
+      "javaw command",
+      "Javadoc tool",
+      "javah command"
+    ],
+    "Text": "Which of the following tool is used to generate API documentation in HTML format from doc comments in source code?"
+  },
+  {
+    "Text": "Which keyword is used for accessing the features of a package?",
+    "CorrectAnswer": "import",
+    "Options": [
+      "package",
+      "import",
+      "extends",
+      "export"
+    ]
+  },
+  {
+    "Options": [
+      "Java Archive Runner",
+      "Java Application Resource",
+      "Java Application Runner",
+      "None of the above"
+    ],
+    "CorrectAnswer": "None of the above",
+    "Text": "In java, jar stands for _____."
+  },
+  {
+    "CorrectAnswer": "Unicode escape sequence",
+    "Text": "The \\u0021 article referred to as a",
+    "Options": [
+      "Unicode escape sequence",
+      "Octal escape",
+      "Hexadecimal",
+      "Line feed"
+    ]
+  },
+  {
+    "CorrectAnswer": "JDB",
+    "Options": [
+      "JVM",
+      "JRE",
+      "JDK",
+      "JDB"
+    ],
+    "Text": "_____ is used to find and fix bugs in the Java programs."
+  },
+  {
+    "CorrectAnswer": "char ch = '\\utea';",
+    "Text": "Which of the following is a valid declaration of a char?",
+    "Options": [
+      "char ch = '\\utea';",
+      "char ca = 'tea';",
+      "char cr = \\u0223;",
+      "char cc = '\\itea';"
+    ]
+  },
+  {
+    "Options": [
+      "Object",
+      "int",
+      "long",
+      "void"
+    ],
+    "Text": "What is the return type of the hashCode() method in the Object class?",
+    "CorrectAnswer": "int"
+  },
+  {
+    "Options": [
+      "ABH8097",
+      "L990023",
+      "904423",
+      "0xnf029L"
+    ],
+    "CorrectAnswer": "0xnf029L",
+    "Text": "Which of the following is a valid long literal?"
+  },
+  {
+    "Options": [
+      "0",
+      "Not a Number",
+      "Infinity",
+      "Run time exception"
+    ],
+    "CorrectAnswer": "Infinity",
+    "Text": "What does the expression float a = 35 / 0 return?"
+  },
+  {
+    "Text": "Evaluate the following Java expression, if x=3, y=5, and z=10:",
+    "CorrectAnswer": "25",
+    "Options": [
+      "24",
+      "23",
+      "20",
+      "25"
+    ]
+  },
+  {
+    "CorrectAnswer": "Marker Interface",
+    "Text": "An interface with no fields or methods is known as a ______.",
+    "Options": [
+      "Runnable Interface",
+      "Marker Interface",
+      "Abstract Interface",
+      "CharSequence Interface"
+    ]
+  },
+  {
+    "Options": [
+      "new List(false, 3)",
+      "new List(3, true)",
+      "new List(true, 3)",
+      "new List(3, false)"
+    ],
+    "CorrectAnswer": "new List(3, true)",
+    "Text": "Which of the following creates a List of 3 visible items and multiple selections abled?"
+  },
+  {
+    "Text": "Which of the following is false?",
+    "CorrectAnswer": "It is an optional jar file.",
+    "Options": [
+      "The rt.jar stands for the runtime jar",
+      "It is an optional jar file",
+      "It contains all the compiled class files",
+      "All the classes available in rt.jar is known to the JVM"
+    ]
+  },
+  {
+    "CorrectAnswer": "Used for a word character",
+    "Text": "What is the use of \\w in regex?",
+    "Options": [
+      "Used for a whitespace character",
+      "Used for a non-whitespace character",
+      "Used for a word character",
+      "Used for a non-word character"
+    ]
+  },
+  {
+    "Options": [
+      "notify(), wait( long msecs ), and synchronized()",
+      "wait( long msecs ), interrupt(), and notifyAll()",
+      "notify(), notifyAll(), and wait()",
+      "sleep( long msecs ), wait(), and notify()"
+    ],
+    "Text": "Which of the given methods are of Object class?",
+    "CorrectAnswer": "notify(), notifyAll(), and wait()"
+  },
+  {
+    "Text": "Given that Student is a class, how many reference variables and objects are created by the following code?",
+    "Options": [
+      "Three reference variables and two objects are created.",
+      "Two reference variables and two objects are created.",
+      "One reference variable and two objects are created.",
+      "Three reference variables and three objects are created."
+    ],
+    "CorrectAnswer": "Three reference variables and two objects are created."
+  },
+  {
+    "Text": "Which of the following is a valid syntax to synchronize the HashMap?",
+    "CorrectAnswer": "Map m1 = Collections.synchronizedMap(hashMap);",
+    "Options": [
+      "Map m = hashMap.synchronizeMap();",
+      "HashMap map =hashMap.synchronizeMap();",
+      "Map m1 = Collections.synchronizedMap(hashMap);",
+      "Map m2 = Collection.synchronizeMap(hashMap);"
+    ]
+  },
+  {
+    "Text": "Given,\n\nArrayList list = new ArrayList();\n\nWhat is the initial quantity of the ArrayList list?",
+    "CorrectAnswer": "10",
+    "Options": [
+      "5",
+      "10",
+      "0",
+      "100"
+    ]
+  },
+  {
+    "Text": "Which of the following is a mutable class in java?",
+    "CorrectAnswer": "java.lang.StringBuilder",
+    "Options": [
+      "java.lang.String",
+      "java.lang.Byte",
+      "java.lang.Short",
+      "java.lang.StringBuilder"
+    ]
+  },
+  {
+    "Text": "What will be the output of the following program?",
+    "Options": [
+      "No error",
+      "Method is not defined properly",
+      "Constructor is not defined properly",
+      "Extra parentheses"
+    ],
+    "CorrectAnswer": "Method is not defined properly."
+  },
+  {
+    "CorrectAnswer": "Tight Coupling",
+    "Options": [
+      "Tight Coupling",
+      "Cohesion",
+      "Loose Coupling",
+      "None of the above"
+    ],
+    "Text": "What is meant by the classes and objects that dependents on each other?"
+  },
+  {
+    "CorrectAnswer": "None of the above",
+    "Text": "Given,\n\nint values[ ] = {1,2,3,4,5,6,7,8,9,10};\n\nFind the value of value[i]?",
+    "Options": [
+      "10",
+      "11",
+      "15",
+      "None of the above"
+    ]
+  },
+  {
+    "Text": "Which of the following for loop declaration is not valid?",
+    "Options": [
+      "for ( int i = 99; i >= 0; i / 9 )",
+      "for ( int i = 7; i <= 77; i += 7 )",
+      "for ( int i = 20; i >= 2; - -i )",
+      "for ( int i = 2; i <= 20; i = 2* i )"
+    ],
+    "CorrectAnswer": "for ( int i = 99; i>=0; i / 9)"
+  },
+  {
+    "CorrectAnswer": "CallableStatement cab = con.prepareCall(\"{call getPassword()}\");\ncab.executeQuery();",
+    "Text": "Which of the following code segment would execute the stored procedure \"getPassword()\" located in a database server?",
+    "Options": [
+      "CallableStatement cs = connection.prepareCall(\"{call.getPassword()}\");\ncs.executeQuery();",
+      "CallabledStatement callable = conn.prepareCall(\"{call getPassword()}\");\ncallable.executeUpdate();",
+      "CallableStatement cab = con.prepareCall(\"{call getPassword()}\");\ncab.executeQuery();",
+      "Callablestatement cstate = connect.prepareCall(\"{call getpassword()}\");\ncstate.executeQuery();"
+    ]
+  },
+  {
+    "CorrectAnswer": "Multiple threads",
+    "Options": [
+      "Only one thread",
+      "Multiple threads",
+      "Only main (main() method) thread",
+      "Two threads"
+    ],
+    "Text": "How many threads can be executed at a time?"
+  },
+  {
+    "Text": "If three threads trying to share a single object at the same time, which condition will arise in this scenario?",
+    "CorrectAnswer": "Race condition",
+    "Options": [
+      "Time-Lapse",
+      "Critical situation",
+      "Race condition",
+      "Recursion"
+    ]
+  },
+  {
+    "Options": [
+      "It releases all the locks it has.",
+      "It does not release any locks.",
+      "It releases half of its locks.",
+      "It releases all of its lock except one."
+    ],
+    "Text": "If a thread goes to sleep",
+    "CorrectAnswer": "It does not release any locks."
+  },
+  {
+    "CorrectAnswer": "volatile",
+    "Options": [
+      "global",
+      "transient",
+      "volatile",
+      "default"
+    ],
+    "Text": "Which of the following modifiers can be used for a variable so that it can be accessed by any thread or a part of a program?"
+  },
+  {
+    "Options": [
+      "Two bytes read/write at a time.",
+      "Eight bytes read/write at a time.",
+      "One byte read/write at a time.",
+      "Five bytes read/ write at a time."
+    ],
+    "CorrectAnswer": "Two bytes read/write at a time.",
+    "Text": "In character stream I/O, a single read/write operation performs _____."
+  },
+  {
+    "CorrectAnswer": "Default encoding of the host platform",
+    "Text": "What is the default encoding for an OutputStreamWriter?",
+    "Options": [
+      "UTF-8",
+      "Default encoding of the host platform",
+      "UTF-12",
+      "None of the above"
+    ]
+  },
+  {
+    "Text": "An interface with no fields or methods is known as a ______.",
+    "CorrectAnswer": "Marker Interface",
+    "Options": [
+      "Runnable Interface",
+      "Marker Interface",
+      "Abstract Interface",
+      "CharSequence Interface"
+    ]
+  },
+  {
+    "Text": "Who invented Java Programming?",
+    "CorrectAnswer": "James Gosling",
+    "Options": [
+      "Guido van Rossum",
+      "James Gosling",
+      "Dennis Ritchie",
+      "Bjarne Stroustrup"
+    ]
+  },
+  {
+    "Options": [
+      "Java is a sequence-dependent programming language",
+      "Java is a code dependent programming language",
+      "Java is a platform-dependent programming language",
+      "Java is a platform-independent programming language"
+    ],
+    "Text": "Which statement is true about Java?",
+    "CorrectAnswer": "Java is a platform-independent programming language"
+  },
+  {
+    "Text": "Which method of the Class.class is used to determine the name of a class represented by the class object as a String?",
+    "CorrectAnswer": "getName()",
+    "Options": [
+      "getClass()",
+      "intern()",
+      "getName()",
+      "toString()"
+    ]
+  },
+  {
+    "CorrectAnswer": "JDK",
+    "Text": "Which component is used to compile, debug and execute the java programs?",
+    "Options": [
+      "JRE",
+      "JIT",
+      "JDK",
+      "JVM"
+    ]
+  },
+  {
+    "CorrectAnswer": "Use of pointers",
+    "Text": "Which one of the following is not a Java feature?",
+    "Options": [
+      "Object-oriented",
+      "Use of pointers",
+      "Portable",
+      "Dynamic and Extensible"
+    ]
+  },
+  {
+    "Options": [
+      "identifier & keyword",
+      "identifier",
+      "keyword",
+      "none of the mentioned"
+    ],
+    "CorrectAnswer": "keyword",
+    "Text": "Which of these cannot be used for a variable name in Java?"
+  },
+  {
+    "Options": [
+      ".js",
+      ".txt",
+      ".class",
+      ".java"
+    ],
+    "CorrectAnswer": ".java",
+    "Text": "What is the extension of java code files?"
+  },
+  {
+    "CorrectAnswer": "JAVA_HOME",
+    "Text": "Which environment variable is used to set the java path?",
+    "Options": [
+      "MAVEN_Path",
+      "JavaPATH",
+      "JAVA",
+      "JAVA_HOME"
+    ]
+  },
+  {
+    "Text": "Which of the following is not an OOPS concept in Java?",
+    "Options": [
+      "Polymorphism",
+      "Inheritance",
+      "Compilation",
+      "Encapsulation"
+    ],
+    "CorrectAnswer": "Compilation"
+  },
+  {
+    "Options": [
+      "Referring to the instance variable when a local variable has the same name",
+      "Passing itself to the method of the same class",
+      "Passing itself to another method",
+      "Calling another constructor in constructor chaining"
+    ],
+    "CorrectAnswer": "Passing itself to the method of the same class",
+    "Text": "What is not the use of 'this' keyword in Java?"
+  },
+  {
+    "CorrectAnswer": "* operator has converted b * 50 into int, which can not be converted to byte without casting",
+    "Text": "What will be the error in the following Java code?",
+    "Options": [
+      "b cannot contain value 50",
+      "b cannot contain value 100, limited by its range",
+      "No error in this code",
+      "* operator has converted b * 50 into int, which can not be converted to byte without casting"
+    ]
+  },
+  {
+    "Text": "Which of the following is a type of polymorphism in Java Programming?",
+    "CorrectAnswer": "Compile time polymorphism",
+    "Options": [
+      "Multiple polymorphism",
+      "Compile time polymorphism",
+      "Multilevel polymorphism",
+      "Execution time polymorphism"
+    ]
+  },
+  {
+    "Options": [
+      "Floating-point value assigned to a Floating type",
+      "Floating-point value assigned to an integer type",
+      "Integer value assigned to floating type",
+      "Integer value assigned to floating type"
+    ],
+    "Text": "What is Truncation in Java?",
+    "CorrectAnswer": "Floating-point value assigned to an integer type"
+  },
+  {
+    "Text": "In which process, a local variable has the same name as one of the instance variables?",
+    "CorrectAnswer": "Variable Shadowing",
+    "Options": [
+      "Serialization",
+      "Variable Shadowing",
+      "Abstraction",
+      "Multi-threading"
+    ]
+  },
+  {
+    "Text": "What is the extension of compiled java classes?",
+    "Options": [
+      ".txt",
+      ".js",
+      ".class",
+      ".java"
+    ],
+    "CorrectAnswer": ".class"
+  },
+  {
+    "Text": "Which exception is thrown when java is out of memory?",
+    "CorrectAnswer": "OutOfMemoryError",
+    "Options": [
+      "MemoryError",
+      "OutOfMemoryError",
+      "MemoryOutOfBoundsException",
+      "MemoryFullException"
+    ]
+  },
+  {
+    "CorrectAnswer": "if()",
+    "Options": [
+      "break",
+      "continue",
+      "for()",
+      "if()"
+    ],
+    "Text": "Which of these are selection statements in Java?"
+  },
+  {
+    "Text": "Which of these keywords is used to define interfaces in Java?",
+    "Options": [
+      "intf",
+      "Intf",
+      "interface",
+      "Interface"
+    ],
+    "CorrectAnswer": "interface"
+  },
+  {
+    "Text": "Which of the following is a superclass of every class in Java?",
+    "Options": [
+      "ArrayList",
+      "Abstract class",
+      "Object class",
+      "String"
+    ],
+    "CorrectAnswer": "Object class"
+  },
+  {
+    "CorrectAnswer": "JVM",
+    "Options": [
+      "JProfiler",
+      "Eclipse Profiler",
+      "JVM",
+      "JConsole"
+    ],
+    "Text": "Which of the below is not a Java Profiler?"
+  },
+  {
+    "Options": [
+      "java.io",
+      "java.system",
+      "java.lang",
+      "java.util"
+    ],
+    "CorrectAnswer": "java.lang",
+    "Text": "Which of these packages contains the exception Stack Overflow in Java?"
+  },
+  {
+    "Options": [
+      "start() method is used to begin execution of the thread",
+      "run() method is used to begin execution of a thread before start() method in special cases",
+      "A thread can be formed by implementing Runnable interface only",
+      "A thread can be formed by a class that extends Thread class"
+    ],
+    "CorrectAnswer": "run() method is used to begin execution of a thread before start() method in special cases",
+    "Text": "Which of these statements is incorrect about Thread?"
+  },
+  {
+    "Text": "Which of these keywords are used for the block to be examined for exceptions?",
+    "CorrectAnswer": "try",
+    "Options": [
+      "check",
+      "throw",
+      "catch",
+      "try"
+    ]
+  },
+  {
+    "Options": [
+      "Protected",
+      "Void",
+      "Public",
+      "Private"
+    ],
+    "Text": "Which one of the following is not an access modifier?",
+    "CorrectAnswer": "Void"
+  },
+  {
+    "Options": [
+      "It has only methods",
+      "Objects can't be created",
+      "It has a class name",
+      "It has no class name"
+    ],
+    "Text": "Which of the following is true about the anonymous inner class?",
+    "CorrectAnswer": "It has no class name"
+  },
+  {
+    "Text": "What is the numerical range of a char data type in Java?",
+    "CorrectAnswer": "0 to 65535",
+    "Options": [
+      "0 to 256",
+      "-128 to 127",
+      "0 to 65535",
+      "0 to 32767"
+    ]
+  },
+  {
+    "Text": "Which class provides system independent server side implementation?",
+    "Options": [
+      "Server",
+      "ServerReader",
+      "Socket",
+      "ServerSocket"
+    ],
+    "CorrectAnswer": "ServerSocket"
+  },
+  {
+    "CorrectAnswer": "Servlets execute within the address space of web server, platform independent and uses the functionality of java class libraries",
+    "Options": [
+      "Servlets can use the full functionality of the Java class libraries",
+      "Servlets execute within the address space of web server",
+      "Servlets are platform-independent because they are written in java",
+      "Servlets execute within the address space of web server, platform independent and uses the functionality of java class libraries"
+    ],
+    "Text": "Which of the following is true about servlets?"
+  },
+  {
+    "Options": [
+      "java.util package",
+      "java.lang package",
+      "java.awt package",
+      "java.io package"
+    ],
+    "Text": "Which package contains the Random class?",
+    "CorrectAnswer": "java.util package"
+  },
+  {
+    "Options": [
+      "An object created by using the new keyword.",
+      "An object of a superclass created in the subclass.",
+      "An object without having any name but having a reference.",
+      "An object that has no reference."
+    ],
+    "CorrectAnswer": "An object that has no reference.",
+    "Text": "What do you mean by nameless objects?"
+  }
+]
