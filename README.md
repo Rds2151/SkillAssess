@@ -49,5 +49,13 @@ To run the SkillAssess project locally, follow these steps:
 
 3. Configure Firebase:
    - Create a new Firebase project.
-   - Add your google-services.json file to the app directory.
-   - Build and run the application on an Android emulator or device.
+   - Add your `google-services.json` file to the `app` directory.
+4. Build and run the application on an Android emulator or device.
+
+## Future Enhancements
+  - User-generated quizzes
+  - Group collaboration features
+  - Additional functionalities for educators
+    
+## Contribution
+Contributions to the SkillAssess project are welcome. If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
