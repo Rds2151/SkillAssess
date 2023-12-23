@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "632833375852",
+    "firebase_url": "https://project-b97d7-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "project-b97d7",
+    "storage_bucket": "project-b97d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632833375852:android:192818a25355d39dc0a249",
+        "android_client_info": {
+          "package_name": "com.rds.SkillAssess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632833375852-9cmok6ff1glskal1j7bct9fdvhlpb70i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU1xSPaojpzbtpfYYvZECDhcPzQ4-Kg_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632833375852-9cmok6ff1glskal1j7bct9fdvhlpb70i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
